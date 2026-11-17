@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>微信读书阅读偏好画像与定制书单</title>
+  <style>
+    :root {
+      --bg-paper: #f6f3ec;
+      --bg-card: #fcfaf6;
+      --bg-muted: #ede7db;
+      --ink-primary: #1e1d1a;
+      --ink-secondary: #5c574e;
+      --ink-muted: #8a8377;
+      --border-soft: #e2dacb;
+      --accent-forest: #244c40;
+      --accent-forest-soft: #e4ede9;
+      --accent-terra: #b55437;
+      --accent-terra-soft: #f7e9e4;
+      --accent-amber: #b88122;
+      --accent-amber-soft: #f9f1df;
+      --shadow-card: 0 4px 20px rgba(30, 29, 26, 0.04);
+      --shadow-hover: 0 10px 28px rgba(30, 29, 26, 0.08);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --font-serif: "Songti SC", "Noto Serif SC", "Source Han Serif SC", "STSong", Georgia, serif;
+      --font-sans: "PingFang SC", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-paper);
+      background-image: radial-gradient(rgba(36, 76, 64, 0.035) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--ink-primary);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: var(--accent-forest);
+      color: #fff;
+      padding: 10px 16px;
+      z-index: 100;
+      border-radius: 0 0 8px 0;
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      left: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Top navigation bar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(246, 243, 236, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      gap: 16px;
+    }
+
+    .brand {
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: 0.02em;
+      color: var(--accent-forest);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-terra);
+      display: inline-block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 6px 4px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--accent-forest);
+      border-bottom-color: var(--accent-forest);
+    }
+
+    /* Hero section */
+    .hero {
+      padding: 56px 0 36px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-terra);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(30px, 4.2vw, 46px);
+      line-height: 1.22;
+      font-weight: 700;
+      color: var(--ink-primary);
+      max-width: 820px;
+      margin-bottom: 18px;
+    }
+
+    .hero-subtitle {
+      font-size: 17px;
+      color: var(--ink-secondary);
+      max-width: 780px;
+      line-height: 1.75;
+      margin-bottom: 32px;
+      padding-left: 16px;
+      border-left: 3px solid var(--accent-forest);
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .kpi-label {
+      font-size: 13px;
+      color: var(--ink-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .kpi-value {
+      font-family: var(--font-serif);
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--ink-primary);
+      font-variant-numeric: tabular-nums;
+      line-height: 1.15;
+    }
+
+    .kpi-unit {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      margin-left: 4px;
+      font-family: var(--font-sans);
+    }
+
+    .kpi-note {
+      font-size: 12.5px;
+      color: var(--ink-secondary);
+      margin-top: 8px;
+    }
+
+    /* Section scaffold */
+    section {
+      padding: 40px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-soft);
+      padding-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .section-kicker {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-forest);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ink-primary);
+    }
+
+    .section-desc {
+      font-size: 14px;
+      color: var(--ink-secondary);
+      max-width: 460px;
+    }
+
+    /* Charts layout */
+    .viz-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 24px 26px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .panel-title {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .panel-subtitle {
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    /* Segmented control for bar chart */
+    .seg-group {
+      display: inline-flex;
+      background: var(--bg-muted);
+      padding: 3px;
+      border-radius: 999px;
+      gap: 2px;
+    }
+
+    .seg-btn {
+      border: none;
+      background: transparent;
+      color: var(--ink-secondary);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-sans);
+    }
+
+    .seg-btn.active {
+      background: var(--bg-card);
+      color: var(--accent-forest);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Radar SVG container */
+    .radar-wrap {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .radar-svg {
+      width: 100%;
+      max-width: 390px;
+      height: auto;
+      overflow: visible;
+    }
+
+    .radar-point {
+      cursor: pointer;
+      transition: r 0.15s ease, fill 0.15s ease;
+    }
+
+    .radar-point:hover {
+      r: 7;
+    }
+
+    .radar-detail-box {
+      margin-top: 14px;
+      width: 100%;
+      background: var(--bg-paper);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 13.5px;
+      min-height: 74px;
+    }
+
+    .radar-detail-title {
+      font-weight: 700;
+      color: var(--accent-forest);
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Bar chart */
+    .bar-list {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 88px 1fr 84px;
+      align-items: center;
+      gap: 12px;
+      font-size: 13.5px;
+    }
+
+    .bar-name {
+      color: var(--ink-primary);
+      font-weight: 500;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .bar-track {
+      height: 12px;
+      background: var(--bg-muted);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-forest), #3b7663);
+      transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .bar-row.highlight .bar-fill {
+      background: linear-gradient(90deg, var(--accent-terra), #d0785a);
+    }
+
+    .bar-meta {
+      font-variant-numeric: tabular-nums;
+      color: var(--ink-secondary);
+      font-size: 12.5px;
+      white-space: nowrap;
+    }
+
+    /* Reading personas grid */
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 18px;
+    }
+
+    .persona-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .persona-tag {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-forest-soft);
+      color: var(--accent-forest);
+    }
+
+    .persona-card.warm .persona-tag {
+      background: var(--accent-terra-soft);
+      color: var(--accent-terra);
+    }
+
+    .persona-card.amber .persona-tag {
+      background: var(--accent-amber-soft);
+      color: var(--accent-amber);
+    }
+
+    .persona-title {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .persona-body {
+      font-size: 14.5px;
+      color: var(--ink-secondary);
+      line-height: 1.68;
+    }
+
+    .persona-books {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-soft);
+    }
+
+    .mini-chip {
+      font-size: 12px;
+      background: var(--bg-paper);
+      border: 1px solid var(--border-soft);
+      color: var(--ink-primary);
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    /* Top invested books + recent reading */
+    .hall-split {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .top-books-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .book-mini-card {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 12px;
+      background: var(--bg-paper);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+    }
+
+    .book-cover-box {
+      width: 44px;
+      height: 62px;
+      flex-shrink: 0;
+      border-radius: 4px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #2b4c42, #4d7567);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: var(--font-serif);
+      font-size: 12px;
+      text-align: center;
+      padding: 4px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+      position: relative;
+    }
+
+    .book-cover-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .book-mini-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .book-mini-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--ink-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .book-mini-author {
+      font-size: 12px;
+      color: var(--ink-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+
+    .book-mini-stats {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--accent-forest);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .status-pill {
+      font-size: 11px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: var(--accent-forest-soft);
+      color: var(--accent-forest);
+      font-weight: 600;
+    }
+
+    .status-pill.reading {
+      background: var(--accent-amber-soft);
+      color: var(--accent-amber);
+    }
+
+    /* Recent timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 76px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed var(--border-soft);
+      font-size: 13.5px;
+    }
+
+    .timeline-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .tl-date {
+      font-size: 12px;
+      color: var(--ink-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tl-book {
+      min-width: 0;
+    }
+
+    .tl-title {
+      font-weight: 600;
+      color: var(--ink-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tl-author {
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
+    .tl-prog {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-terra);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    /* Recommendations filter toolbar */
+    .rec-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      border: 1px solid var(--border-soft);
+      background: var(--bg-card);
+      color: var(--ink-secondary);
+      padding: 8px 15px;
+      border-radius: 999px;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-sans);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent-forest);
+      color: var(--accent-forest);
+    }
+
+    .filter-btn.active {
+      background: var(--accent-forest);
+      color: #fff;
+      border-color: var(--accent-forest);
+    }
+
+    .wishlist-summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13.5px;
+      color: var(--ink-secondary);
+    }
+
+    .export-btn {
+      border: 1px solid var(--accent-terra);
+      background: transparent;
+      color: var(--accent-terra);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-sans);
+    }
+
+    .export-btn:hover {
+      background: var(--accent-terra);
+      color: #fff;
+    }
+
+    /* Recommendation cards */
+    .rec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 20px;
+    }
+
+    .rec-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+
+    .rec-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: #cfc4b0;
+    }
+
+    .rec-card.wishlisted {
+      border-color: var(--accent-terra);
+      background: #fffdfb;
+    }
+
+    .rec-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .rec-cat {
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-forest-soft);
+      color: var(--accent-forest);
+    }
+
+    .rec-card[data-group="walk"] .rec-cat {
+      background: #e6eff4;
+      color: #26566e;
+    }
+
+    .rec-card[data-group="women"] .rec-cat {
+      background: var(--accent-terra-soft);
+      color: var(--accent-terra);
+    }
+
+    .rec-card[data-group="mind"] .rec-cat {
+      background: var(--accent-amber-soft);
+      color: #8f6012;
+    }
+
+    .rec-match {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-terra);
+      white-space: nowrap;
+    }
+
+    .rec-title {
+      font-family: var(--font-serif);
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--ink-primary);
+      line-height: 1.3;
+    }
+
+    .rec-author {
+      font-size: 13.5px;
+      color: var(--ink-muted);
+      margin-top: -6px;
+    }
+
+    .rec-anchor {
+      font-size: 12.5px;
+      background: var(--bg-paper);
+      border-left: 3px solid var(--accent-amber);
+      padding: 7px 10px;
+      border-radius: 0 6px 6px 0;
+      color: var(--ink-secondary);
+    }
+
+    .rec-reason {
+      font-size: 14.5px;
+      color: var(--ink-secondary);
+      line-height: 1.68;
+    }
+
+    .rec-footer {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .rec-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .rec-tag {
+      font-size: 11.5px;
+      color: var(--ink-muted);
+      background: var(--bg-muted);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .wish-btn {
+      border: 1px solid var(--border-soft);
+      background: var(--bg-paper);
+      color: var(--ink-primary);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      font-family: var(--font-sans);
+    }
+
+    .wish-btn:hover {
+      border-color: var(--accent-terra);
+      color: var(--accent-terra);
+    }
+
+    .rec-card.wishlisted .wish-btn {
+      background: var(--accent-terra);
+      border-color: var(--accent-terra);
+      color: #fff;
+    }
+
+    /* Shelf gems */
+    .gems-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .gem-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .gem-item {
+      background: var(--bg-paper);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+    }
+
+    .gem-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .gem-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--ink-primary);
+    }
+
+    .gem-badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--accent-forest-soft);
+      color: var(--accent-forest);
+      white-space: nowrap;
+    }
+
+    .gem-sub {
+      font-size: 13px;
+      color: var(--ink-secondary);
+    }
+
+    .prog-bar {
+      height: 5px;
+      background: var(--bg-muted);
+      border-radius: 999px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .prog-bar-fill {
+      height: 100%;
+      background: var(--accent-terra);
+      border-radius: 999px;
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0 56px;
+      text-align: center;
+      color: var(--ink-muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border-soft);
+      margin-top: 24px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--ink-primary);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13.5px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      z-index: 200;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 960px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .viz-grid,
+      .hall-split,
+      .gems-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .kpi-grid,
+      .top-books-grid,
+      .rec-grid {
+        grid-template-columns: 1fr;
+      }
+      .bar-row {
+        grid-template-columns: 72px 1fr 74px;
+        gap: 8px;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">跳到主要内容</a>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>微信读书 · 阅读画像与私享书单</span>
+      </div>
+      <nav class="nav-links" aria-label="页面导航">
+        <a href="#overview">阅读数据</a>
+        <a href="#profile">偏好基因</a>
+        <a href="#recommendations">定制推荐</a>
+        <a href="#shelf-gems">书架遗珠</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <!-- Hero & KPIs -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-eyebrow">WeRead Personal Reading Dossier · 2026.11</div>
+      <h1 id="hero-title" class="hero-title">在旷野与书斋之间：<br>你的微信读书偏好画像与推荐书单</h1>
+      <p class="hero-subtitle">
+        基于你书架中真实的 <strong>570 本藏书</strong> 与 <strong>418 条阅读足迹</strong> 生成。你的精神版图清晰而有韧性：一边扎进李娟与刘子超贴近大地的行走现场，一边在加缪、波伏瓦与鲍曼的追问里反复校准自我；同时保留着前端工程的理性秩序、古典长篇的耐心，以及对中医与日常节律的温和关照。
+      </p>
+
+      <div class="kpi-grid">
+        <article class="kpi-card">
+          <div class="kpi-label"><span>书架总藏书</span><span>📚</span></div>
+          <div class="kpi-value">570<span class="kpi-unit">本</span></div>
+          <div class="kpi-note">含 3 个自定义分组（纳瓦尔 / 叔本华 / 前端）</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label"><span>累计深读时长</span><span>⏳</span></div>
+          <div class="kpi-value">793<span class="kpi-unit">小时</span></div>
+          <div class="kpi-note">文学与小说合计贡献超 68% 的深度时间</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label"><span>已产生阅读足迹</span><span>🔖</span></div>
+          <div class="kpi-value">418<span class="kpi-unit">本</span></div>
+          <div class="kpi-note">73.3% 藏书被实际翻阅过，选书精准度极高</div>
+        </article>
+        <article class="kpi-card">
+          <div class="kpi-label"><span>完整读完</span><span>✦</span></div>
+          <div class="kpi-value">168<span class="kpi-unit">本</span></div>
+          <div class="kpi-note">在读主线：《百年孤独》《遥远的向日葵地》</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Data Visualization: Radar & Category Bars -->
+    <section id="overview" aria-labelledby="overview-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">01 · Data Panorama</div>
+          <h2 id="overview-title" class="section-title">阅读光谱与时间分配</h2>
+        </div>
+        <p class="section-desc">点击或悬停雷达图节点可查看各维度代表作；右侧可切换按「阅读时长」或「藏书与完本数」观察分布。</p>
+      </div>
+
+      <div class="viz-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">六维阅读灵魂雷达</h3>
+              <p class="panel-subtitle">综合投入时长、完本率与收藏密度评估</p>
+            </div>
+          </div>
+          <div class="radar-wrap">
+            <svg id="radarSvg" class="radar-svg" viewBox="0 0 400 350" role="img" aria-label="六维阅读灵魂雷达图"></svg>
+            <div id="radarDetail" class="radar-detail-box">
+              <div class="radar-detail-title">
+                <span>点击上方维度圆点查看详细解读</span>
+                <span>100 分制</span>
+              </div>
+              <div style="color: var(--ink-secondary);">最突出维度：散文游记与真实纪实（96 分）、女性视角与主体性（90 分）、存在与社科思辨（88 分）。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">学科领域投入分布</h3>
+              <p class="panel-subtitle">微信读书主分类口径统计（前 11 大核心领域）</p>
+            </div>
+            <div class="seg-group" role="tablist" aria-label="切换统计口径">
+              <button class="seg-btn active" data-metric="hours" role="tab" aria-selected="true">投入时长</button>
+              <button class="seg-btn" data-metric="count" role="tab" aria-selected="false">藏书 / 完本</button>
+            </div>
+          </div>
+          <div id="barList" class="bar-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reading Personas & Hall of Fame -->
+    <section id="profile" aria-labelledby="profile-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">02 · Reading DNA</div>
+          <h2 id="profile-title" class="section-title">你的五个阅读切面 &amp; 高投入书单</h2>
+        </div>
+        <p class="section-desc">从 46 小时的《红楼梦》到 2026 年秋天的《百年孤独》，这些作品共同构成了你的阅读坐标。</p>
+      </div>
+
+      <div class="persona-grid">
+        <article class="persona-card">
+          <span class="persona-tag">01 · 第一主线（36 本散文游记完读）</span>
+          <h3 class="persona-title">贴近土地与普通人的「现场感」</h3>
+          <p class="persona-body">
+            你极少读悬浮的鸡汤散文，而是偏爱有风沙、汗味与细微生活质地的文字：跟着李娟去阿勒泰牧场，跟着刘子超沿着季风深入中亚与南亚，在吉井忍的八平米小屋里安顿身心，也从《暮色将尽》里看老年如何体面地直面时间。
+          </p>
+          <div class="persona-books">
+            <span class="mini-chip">冬牧场 7.5h</span>
+            <span class="mini-chip">沿着季风的方向 11.1h</span>
+            <span class="mini-chip">东京八平米</span>
+            <span class="mini-chip">看见</span>
+            <span class="mini-chip">我用中文做了场梦</span>
+          </div>
+        </article>
+
+        <article class="persona-card warm">
+          <span class="persona-tag">02 · 持续关切（高完本率）</span>
+          <h3 class="persona-title">女性主体性与代际记忆的追问</h3>
+          <p class="persona-body">
+            从波伏瓦的两本传记到伍尔夫《一间只属于自己的房间》、上野千鹤子系列，再到《明亮的夜晚》《被遗弃的日子》《她对此感到厌烦》三部曲（共读 42 小时），你既读锋利的女性主义理论，也共情代际女性幽微的处境。
+          </p>
+          <div class="persona-books">
+            <span class="mini-chip">成为波伏瓦 10.1h</span>
+            <span class="mini-chip">明亮的夜晚 7.2h</span>
+            <span class="mini-chip">她对此感到厌烦×3 42h</span>
+            <span class="mini-chip">闭经记</span>
+          </div>
+        </article>
+
+        <article class="persona-card amber">
+          <span class="persona-tag">03 · 思想骨架</span>
+          <h3 class="persona-title">存在主义与现代消费社会透视</h3>
+          <p class="persona-body">
+            你很在乎「人如何在庞大系统里保住内心的秩序」：几乎刷完了加缪全系列，搭配《存在主义咖啡馆》《置身事内》《可能性的艺术》与鲍曼、韩炳哲，同时也在实践低物欲与时间自主权（《要钱还是要生活》《时间贫困》）。
+          </p>
+          <div class="persona-books">
+            <span class="mini-chip">可能性的艺术 19.7h</span>
+            <span class="mini-chip">置身事内 12.8h</span>
+            <span class="mini-chip">加缪文集 16.3h</span>
+            <span class="mini-chip">倦怠社会</span>
+          </div>
+        </article>
+
+        <article class="persona-card">
+          <span class="persona-tag">04 · 文学耐力</span>
+          <h3 class="persona-title">古典史诗、反乌托邦与诗意奇想</h3>
+          <p class="persona-body">
+            能沉下心把《红楼梦》读上 46 个小时，也能一口气读完《1984》《美丽新世界》《围城》；近期则同时在翻《百年孤独》《追忆似水年华》《飘》以及充满古典灵气的《夜晚的潜水艇》。
+          </p>
+          <div class="persona-books">
+            <span class="mini-chip">红楼梦 46.3h</span>
+            <span class="mini-chip">1984 · 美丽新世界</span>
+            <span class="mini-chip">围城 10.8h</span>
+            <span class="mini-chip">夜晚的潜水艇</span>
+          </div>
+        </article>
+
+        <article class="persona-card warm">
+          <span class="persona-tag">05 · 理性与生活平衡</span>
+          <h3 class="persona-title">前端工程思维 × 身心节律调养</h3>
+          <p class="persona-body">
+            工作端深耕《深入浅出Node.js》《深入浅出Vue.js》《操作系统导论》《SQL必知必会》；生活中则用《黄帝内经》《真原医》《少食生活》和摄影美学来为大脑松绑，非常懂得「向外探索，向内养护」的平衡。
+          </p>
+          <div class="persona-books">
+            <span class="mini-chip">深入浅出Node.js 13.3h</span>
+            <span class="mini-chip">操作系统导论 12.6h</span>
+            <span class="mini-chip">黄帝内经 22.1h</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="hall-split">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">投入时长 Top 10 作品</h3>
+              <p class="panel-subtitle">最能代表你时间重心的十本书</p>
+            </div>
+          </div>
+          <div id="topBooksGrid" class="top-books-grid"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">近期阅读轨迹（2026 秋）</h3>
+              <p class="panel-subtitle">按最近翻阅日期排序</p>
+            </div>
+          </div>
+          <div id="recentTimeline" class="timeline"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailored Recommendations -->
+    <section id="recommendations" aria-labelledby="rec-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">03 · Curated Recommendations</div>
+          <h2 id="rec-title" class="section-title">为你定制的 11 本私享推荐书单</h2>
+        </div>
+        <p class="section-desc">已逐一核对你的 570 本书架及作者名单，以下 11 本均确认不在现有书架内。可点击「+ 想读」生成你的个人清单。</p>
+      </div>
+
+      <div class="rec-toolbar">
+        <div class="filter-pills" role="tablist" aria-label="按主题筛选推荐书籍">
+          <button class="filter-btn active" data-filter="all">全部推荐 (11)</button>
+          <button class="filter-btn" data-filter="magic">接棒百年孤独与奇想 (3)</button>
+          <button class="filter-btn" data-filter="walk">行走纪实与另类活法 (3)</button>
+          <button class="filter-btn" data-filter="women">女性命运与记忆切面 (3)</button>
+          <button class="filter-btn" data-filter="mind">现代孤独与自我安顿 (2)</button>
+        </div>
+        <div class="wishlist-summary">
+          <span>已标记想读：<strong id="wishCount">0</strong> 本</span>
+          <button id="exportWishBtn" class="export-btn" type="button">复制想读书单</button>
+        </div>
+      </div>
+
+      <div id="recGrid" class="rec-grid"></div>
+    </section>
+
+    <!-- Shelf Gems -->
+    <section id="shelf-gems" aria-labelledby="gems-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">04 · Hidden Gems On Your Shelf</div>
+          <h2 id="gems-title" class="section-title">自家书架里的「待拾遗珠」</h2>
+        </div>
+        <p class="section-desc">这几本早已躺在你的书架中，且与你当下阅读兴趣高度契合，打开微信读书即可接着读。</p>
+      </div>
+
+      <div class="gems-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">读到一半 · 随时可收尾</h3>
+              <p class="panel-subtitle">已经投入了时间，再读几晚就能完结</p>
+            </div>
+          </div>
+          <div class="gem-list">
+            <div class="gem-item">
+              <div class="gem-head">
+                <span class="gem-title">厌女（增订本） · 上野千鹤子</span>
+                <span class="gem-badge">已读 70% · 3.2h</span>
+              </div>
+              <div class="gem-sub">与你读完的《身为女性的选择》《从零开始的女性主义》构成完整闭环，就差最后三成。</div>
+              <div class="prog-bar"><div class="prog-bar-fill" style="width: 70%;"></div></div>
+            </div>
+            <div class="gem-item">
+              <div class="gem-head">
+                <span class="gem-title">瓦尔登湖 · 亨利·戴维·梭罗</span>
+                <span class="gem-badge">已读 61% · 2.5h</span>
+              </div>
+              <div class="gem-sub">呼应你最近的《赞美闲散》《不消费的一年》，适合周末安静收尾。</div>
+              <div class="prog-bar"><div class="prog-bar-fill" style="width: 61%;"></div></div>
+            </div>
+            <div class="gem-item">
+              <div class="gem-head">
+                <span class="gem-title">九诗心：暗夜里的文学启明 · 黄晓丹</span>
+                <span class="gem-badge">已读 35% · 0.9h</span>
+              </div>
+              <div class="gem-sub">借九位古典诗人讲人在困境中的精神自救，与你近期重翻的《古诗十九首》相映。</div>
+              <div class="prog-bar"><div class="prog-bar-fill" style="width: 35%;"></div></div>
+            </div>
+            <div class="gem-item">
+              <div class="gem-head">
+                <span class="gem-title">乡土中国（果麦经典） · 费孝通</span>
+                <span class="gem-badge">已读 32% · 1.8h</span>
+              </div>
+              <div class="gem-sub">你也在看《生育制度》，薄薄一本却几乎是理解中国社会底色的最佳钥匙。</div>
+              <div class="prog-bar"><div class="prog-bar-fill" style="width: 32%;"></div></div>
+            </div>
+            <div class="gem-item">
+              <div class="gem-head">
+                <span class="gem-title">素食者 · 韩江</span>
+                <span class="gem-badge">已读 28% · 1.0h</span>
+              </div>
+              <div class="gem-sub">极其凛冽的身体抵抗与异化寓言，体量很轻，一口气两小时就能读完剩下七成。</div>
+              <div class="prog-bar"><div class="prog-bar-fill" style="width: 28%;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">收藏未读 · 极高匹配宝藏</h3>
+              <p class="panel-subtitle">书架里暂未怎么翻开、但最值得排进下一批阅读计划</p>
+            </div>
+          </div>
+          <div class="gem-list">
+            <div class="gem-item">
+              <div class="gem-head">
+                <span class="gem-title">那不勒斯四部曲 · 埃莱娜·费兰特</span>
+                <span class="gem-badge">已读 1%</span>
+              </div>
+              <div class="gem-sub">你已经读完了费兰特的《被遗弃的日子》，这套四部曲才是她关于女性友谊、阶层与自我出走的巅峰之作。</div>
+            </div>
+            <div class="gem-item">
+              <div class="gem-head">
+                <span class="gem-title">午夜降临前抵达 · 刘子超</span>
+                <span class="gem-badge">待翻阅</span>
+              </div>
+              <div class="gem-sub">继《沿着季风的方向》之后，看刘子超更早期的中东欧漫游，带有波拉尼奥式的迷途与文学气质。</div>
+            </div>
+            <div class="gem-item">
+              <div class="gem-head">
+                <span class="gem-title">中东死生门：巴以行走观察 · 周轶君</span>
+                <span class="gem-badge">待翻阅</span>
+              </div>
+              <div class="gem-sub">跟《看见》《沿着季风的方向》一脉相承的深度现场报道，女性记者在炮火缝隙里的细腻观察。</div>
+            </div>
+            <div class="gem-item">
+              <div class="gem-head">
+                <span class="gem-title">秋园三部曲 · 杨本芬</span>
+                <span class="gem-badge">秋园 3%</span>
+              </div>
+              <div class="gem-sub">八旬老奶奶一笔一划写出的中国普通女性百年漂泊史，文字朴素得像在耳边拉家常，后劲极深。</div>
+            </div>
+            <div class="gem-item">
+              <div class="gem-head">
+                <span class="gem-title">达洛维夫人 / 钟形罩 / 伦敦文稿</span>
+                <span class="gem-badge">待翻阅</span>
+              </div>
+              <div class="gem-sub">伍尔夫、普拉斯与西蒙娜·薇依——三条极高浓度的女性精神意识流与思想手记，正合你的文学光谱。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      数据采自你的微信读书账户实时书架（2026-11-17） · 本地静态单页，无任何外部追踪与数据上传
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // Six-dimension reading profile data
+    const radarData = [
+      {
+        label: '散文与行走纪实',
+        score: 96,
+        desc: '投入最深、完本最多（36 本散文完读）。李娟、刘子超、吉井忍、柴静、戴安娜·阿西尔构成你的精神舒适区。'
+      },
+      {
+        label: '女性视角与主体性',
+        score: 90,
+        desc: '兼顾理论（波伏瓦、伍尔夫、上野千鹤子）与女性文学叙事（费兰特、崔恩荣、《她对此感到厌烦》）。'
+      },
+      {
+        label: '存在主义与社科思辨',
+        score: 88,
+        desc: '加缪作品几乎全通，搭配《可能性的艺术》《置身事内》与鲍曼、韩炳哲，持续思考个体自由与现代系统。'
+      },
+      {
+        label: '古典长篇与严肃文学',
+        score: 85,
+        desc: '《红楼梦》46.3 小时居首，《1984》《围城》已完读，近期正同步推进《百年孤独》《追忆似水年华》《飘》。'
+      },
+      {
+        label: '计算机与工程思维',
+        score: 72,
+        desc: '聚焦前端与底层原理：《深入浅出Node.js》《深入浅出Vue.js》《操作系统导论》《SQL必知必会》。'
+      },
+      {
+        label: '身心医学与生活美学',
+        score: 76,
+        desc: '《黄帝内经》（22.1h）、《真原医》《少食生活》与摄影美学，在忙碌工程之外守住身体的节奏感。'
+      }
+    ];
+
+    // Macro category stats from WeRead shelf
+    const categoryStats = [
+      { name: '文学', hours: 334.5, count: 231, finished: 72, highlight: true },
+      { name: '精品小说', hours: 209.3, count: 127, finished: 42, highlight: true },
+      { name: '个人成长', hours: 90.3, count: 70, finished: 27, highlight: false },
+      { name: '计算机', hours: 55.9, count: 32, finished: 6, highlight: false },
+      { name: '政治军事', hours: 41.6, count: 15, finished: 1, highlight: false },
+      { name: '医学健康', hours: 41.1, count: 12, finished: 7, highlight: false },
+      { name: '人物传记', hours: 34.8, count: 20, finished: 6, highlight: false },
+      { name: '社会文化', hours: 34.0, count: 46, finished: 9, highlight: false },
+      { name: '哲学宗教', hours: 29.8, count: 44, finished: 7, highlight: false },
+      { name: '历史', hours: 28.0, count: 20, finished: 4, highlight: false },
+      { name: '心理', hours: 23.2, count: 20, finished: 9, highlight: false }
+    ];
+
+    // Top 10 invested books
+    const topBooks = [
+      { title: '红楼梦', author: '曹雪芹', hours: 46.3, finished: true, progress: 73, cover: 'https://cdn.weread.qq.com/weread/cover/45/YueWen_34615967/t6_YueWen_34615967.jpg' },
+      { title: '曲黎敏精讲《黄帝内经》', author: '曲黎敏', hours: 22.1, finished: true, progress: 100, cover: 'https://cdn.weread.qq.com/weread/cover/92/yuewen_40055613/t6_yuewen_400556131676969206.jpg' },
+      { title: '可能性的艺术', author: '刘瑜', hours: 19.7, finished: true, progress: 97, cover: 'https://cdn.weread.qq.com/weread/cover/46/3300016646/t6_3300016646.jpg' },
+      { title: '她对此感到厌烦 3', author: '妚鹤', hours: 16.1, finished: true, progress: 100, cover: 'https://cdn.weread.qq.com/weread/cover/62/cpplatform_slf9yb8id7vgqsn9pmzho4/t6_cpplatform_slf9yb8id7vgqsn9pmzho41777257679.jpg' },
+      { title: '她对此感到厌烦', author: '妚鹤', hours: 14.5, finished: true, progress: 100, cover: 'https://cdn.weread.qq.com/weread/cover/86/cpplatform_tu4vch2phdfebvfhawromr/t6_cpplatform_tu4vch2phdfebvfhawromr1684920216.jpg' },
+      { title: '深入浅出Node.js', author: '朴灵', hours: 13.3, finished: true, progress: 99, cover: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/935/26211935/t6_26211935.jpg' },
+      { title: '置身事内', author: '兰小欢', hours: 12.8, finished: true, progress: 89, cover: 'https://cdn.weread.qq.com/weread/cover/52/YueWen_40055543/t6_YueWen_40055543.jpg' },
+      { title: '操作系统导论', author: 'Remzi 等', hours: 12.6, finished: false, progress: 67, cover: 'https://cdn.weread.qq.com/weread/cover/71/YueWen_30179184/t6_YueWen_30179184.jpg' },
+      { title: '毛泽东选集（全四卷）', author: '毛泽东', hours: 11.8, finished: false, progress: 35, cover: 'https://cdn.weread.qq.com/weread/cover/84/3300024284/t6_3300024284.jpg' },
+      { title: '沿着季风的方向', author: '刘子超', hours: 11.1, finished: true, progress: 98, cover: 'https://cdn.weread.qq.com/weread/cover/19/cpplatform_fda5h2lovskucboidpjw6n/t6_cpplatform_fda5h2lovskucboidpjw6n1700447848.jpg' }
+    ];
+
+    // Recent reading timeline
+    const recentBooks = [
+      { date: '2026-11-17', title: '百年孤独', author: '加西亚·马尔克斯', status: '在读 19% · 4.2h' },
+      { date: '2026-11-16', title: '遥远的向日葵地', author: '李娟', status: '在读 76%' },
+      { date: '2026-11-06', title: '追忆似水年华（全集）', author: '普鲁斯特', status: '新开坑' },
+      { date: '2026-11-05', title: '飘', author: '玛格丽特·米切尔', status: '在读 34%' },
+      { date: '2026-11-04', title: '看见', author: '柴静', status: '已读完 · 4.8h' },
+      { date: '2026-10-30', title: '夜晚的潜水艇', author: '陈春成', status: '在读 39% · 5.1h' },
+      { date: '2026-10-30', title: '赞美闲散', author: '伯特兰·罗素', status: '在读 6%' },
+      { date: '2026-10-29', title: '有限与无限的游戏', author: '詹姆斯·卡斯', status: '在读 99%' },
+      { date: '2026-10-28', title: '冬牧场', author: '李娟', status: '已读完 · 7.5h' },
+      { date: '2026-10-17', title: '东京八平米', author: '吉井忍', status: '已读完 · 2.4h' }
+    ];
+
+    // Curated 11 book recommendations (verified not in user's shelf)
+    const recommendations = [
+      {
+        id: 'egnh',
+        group: 'magic',
+        groupLabel: '接棒百年孤独与奇想',
+        title: '额尔古纳河右岸',
+        author: '迟子建',
+        match: '98% 契合',
+        anchor: '连接《百年孤独》家族史诗 × 李娟北方荒野质感',
+        reason: '写大兴安岭鄂温克族百年迁徙与兴衰，把神性自然、驯鹿山林与家族宿命织成一体，常被誉为「中国东北的百年孤独」。语言如寒夜篝火，既有史诗纵深，又有极静极美的自然灵气。',
+        tags: ['家族史诗', '自然灵性', '茅盾文学奖']
+      },
+      {
+        id: 'pedro',
+        group: 'magic',
+        groupLabel: '接棒百年孤独与奇想',
+        title: '佩德罗·巴拉莫',
+        author: '[墨] 胡安·鲁尔福',
+        match: '95% 契合',
+        anchor: '读完《百年孤独》后最值得溯源的一本薄书',
+        reason: '当年马尔克斯写《百年孤独》陷入瓶颈，正是靠反复精读这本不到十万字的小说打通任督二脉。它用幽灵般的时间碎片拼出一座死城的故事，与《百年孤独》对照阅读会有「原来如此」的惊喜。',
+        tags: ['拉美文学源头', '魔幻现实', '短小精悍']
+      },
+      {
+        id: 'baron',
+        group: 'magic',
+        groupLabel: '接棒百年孤独与奇想',
+        title: '树上的男爵',
+        author: '[意] 伊塔洛·卡尔维诺',
+        match: '94% 契合',
+        anchor: '呼应《夜晚的潜水艇》奇想 × 《赞美闲散》反叛姿态',
+        reason: '12 岁的少年爬上冬青树并立誓一生不再沾地——他在树冠上读书、写作、恋爱、旁观人间变革。卡尔维诺把轻盈的寓言感与坚定的个人独立精神融合到了极致。',
+        tags: ['诗意寓言', '自由精神', '轻盈结构']
+      },
+      {
+        id: 'gewaidehuofa',
+        group: 'walk',
+        groupLabel: '行走纪实与另类活法',
+        title: '格外的活法',
+        author: '吉井忍',
+        match: '97% 契合',
+        anchor: '刚读完《东京八平米》× 关注《要钱还是要生活》',
+        reason: '吉井忍历时多年采访十二位跳出主流轨道的日本普通人——有人经营独立书店、有人开移动咖啡车、有人低物欲独居山野。读起来轻松克制，又给人「生活原来还有另一套解法」的笃定感。',
+        tags: ['非虚构访谈', '低物欲生活', '日常微光']
+      },
+      {
+        id: 'chongzou',
+        group: 'walk',
+        groupLabel: '行走纪实与另类活法',
+        title: '重走：在公路、河流和驿道上寻找西南联大',
+        author: '杨潇',
+        match: '95% 契合',
+        anchor: '延续《沿着季风的方向》田野行旅 × 《看见》记者眼光',
+        reason: '作者徒步重走当年湘黔滇旅行团西迁路线，把今天中国县乡公路的生动现场与八十多年前知识分子的流亡记忆折叠在一起。文笔克制有历史厚度，是近几年华语非虚构的标杆之作。',
+        tags: ['徒步纪实', '中国现场', '历史纵深']
+      },
+      {
+        id: 'hessler',
+        group: 'walk',
+        groupLabel: '行走纪实与另类活法',
+        title: '寻路中国',
+        author: '[美] 彼得·海斯勒（何伟）',
+        match: '93% 契合',
+        anchor: '接续亚历《我用中文做了场梦》的跨文化中国白描',
+        reason: '何伟用十年驾车穿行长城沿线、北方村庄与南方工厂，既没有俯视也没有滤镜，只有极为扎实、幽默又带着温情的普通人切片，让人在熟悉的环境里重新看见变化。',
+        tags: ['跨文化观察', '公路非虚构', '白描细节']
+      },
+      {
+        id: 'runaway',
+        group: 'women',
+        groupLabel: '女性命运与记忆切面',
+        title: '逃离',
+        author: '[加] 艾丽丝·门罗',
+        match: '96% 契合',
+        anchor: '呼应《明亮的夜晚》《被遗弃的日子》《一切愁云消散》',
+        reason: '诺贝尔文学奖得主门罗擅长在几十页的日常琐事里突然翻开女性命运的暗面——婚姻中的隐秘窒息、出走与折返的瞬间犹豫。笔调极其冷静，却能让人久久缓不过神。',
+        tags: ['诺奖短篇', '女性出走', '心理暗涌']
+      },
+      {
+        id: 'smallthings',
+        group: 'women',
+        groupLabel: '女性命运与记忆切面',
+        title: '微物之神',
+        author: '[印] 阿兰达蒂·洛伊',
+        match: '92% 契合',
+        anchor: '两代女性命运 × 《百年孤独》式非线性感官叙事',
+        reason: '布克奖获奖小说，写印度喀拉拉邦两代女性在种姓偏见与家族秘密中的爱恨。全书时间线打碎重组，季风、河流与细小昆虫都带有浓烈情感张力，文学质地非常迷人。',
+        tags: ['布克奖', '非线性叙事', '家族秘密']
+      },
+      {
+        id: 'secondhand',
+        group: 'women',
+        groupLabel: '女性命运与记忆切面',
+        title: '二手时间',
+        author: '[白俄] S.A. 阿列克谢耶维奇',
+        match: '93% 契合',
+        anchor: '结合《1984》《可能性的艺术》与大时代普通人证言',
+        reason: '一部由几十位普通人（尤其是大量女性）口述拼接成的时代史诗。当一个庞大的时代突然退潮，人在爱、信仰、尊严与生活细节里如何自处？真实得令人震撼。',
+        tags: ['诺奖口述史', '大时代个体', '真实证言']
+      },
+      {
+        id: 'escape-freedom',
+        group: 'mind',
+        groupLabel: '现代孤独与自我安顿',
+        title: '逃避自由',
+        author: '[德] 埃里希·弗洛姆',
+        match: '95% 契合',
+        anchor: '连接《论人类不平等的起源》× 鲍曼《新穷人》× 韩炳哲',
+        reason: '站在社会心理学与哲学十字路口上的经典之作，犀利追问：为什么现代人挣脱了传统束缚获得自由后，反而更加孤独焦虑，甚至下意识渴望交出自由、逃进从众或权威里？',
+        tags: ['社会心理学', '现代性悖论', '自由与孤独']
+      },
+      {
+        id: 'whynofish',
+        group: 'mind',
+        groupLabel: '现代孤独与自我安顿',
+        title: '鱼不存在',
+        author: '[美] 露露·米勒',
+        match: '94% 契合',
+        anchor: '《当尼采哭泣》哲思传记感 × 加缪式的荒诞与自救',
+        reason: '一半是科学怪才的传记，一半是作者在人生崩溃边缘的自我打捞——当「秩序」一次次被混沌粉碎，人该如何继续去爱与行动？好读、真诚，两三个小时就能读完却后劲悠长。',
+        tags: ['存在主义自救', '非虚构叙事', '跨界宝藏']
+      }
+    ];
+
+    // Render SVG Radar Chart
+    function renderRadar() {
+      const svg = document.getElementById('radarSvg');
+      const cx = 200;
+      const cy = 175;
+      const maxR = 112;
+      const levels = 4;
+      const count = radarData.length;
+      const angleStep = (Math.PI * 2) / count;
+      const startAngle = -Math.PI / 2;
+
+      let markup = '';
+
+      // Concentric polygons
+      for (let l = 1; l <= levels; l++) {
+        const r = (maxR / levels) * l;
+        const pts = [];
+        for (let i = 0; i < count; i++) {
+          const a = startAngle + i * angleStep;
+          pts.push(`${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`);
+        }
+        markup += `<polygon points="${pts.join(' ')}" fill="${l % 2 === 0 ? 'rgba(36,76,64,0.03)' : 'none'}" stroke="#dcd4c4" stroke-width="1" />`;
+      }
+
+      // Axes & Labels
+      for (let i = 0; i < count; i++) {
+        const a = startAngle + i * angleStep;
+        const x2 = cx + maxR * Math.cos(a);
+        const y2 = cy + maxR * Math.sin(a);
+        markup += `<line x1="${cx}" y1="${cy}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#dcd4c4" stroke-width="1" stroke-dasharray="3,3" />`;
+
+        const lx = cx + (maxR + 24) * Math.cos(a);
+        const ly = cy + (maxR + 20) * Math.sin(a);
+        let anchor = 'middle';
+        if (Math.cos(a) > 0.25) anchor = 'start';
+        if (Math.cos(a) < -0.25) anchor = 'end';
+        const dy = Math.sin(a) > 0.5 ? 10 : (Math.sin(a) < -0.5 ? -4 : 4);
+        markup += `<text x="${lx.toFixed(1)}" y="${(ly + dy).toFixed(1)}" text-anchor="${anchor}" fill="#3d3a34" font-size="12" font-weight="600">${radarData[i].label}</text>`;
+      }
+
+      // Data polygon
+      const dataPts = radarData.map((d, i) => {
+        const a = startAngle + i * angleStep;
+        const r = (d.score / 100) * maxR;
+        return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+      });
+
+      const polyString = dataPts.map(p => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
+      markup += `<polygon points="${polyString}" fill="rgba(36, 76, 64, 0.18)" stroke="#244c40" stroke-width="2.2" stroke-linejoin="round" />`;
+
+      // Interactive vertices
+      dataPts.forEach((p, i) => {
+        markup += `<circle class="radar-point" data-idx="${i}" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="5" fill="#b55437" stroke="#fcfaf6" stroke-width="2" tabindex="0" role="button" aria-label="${radarData[i].label} ${radarData[i].score}分" />`;
+      });
+
+      svg.innerHTML = markup;
+
+      const detailBox = document.getElementById('radarDetail');
+      const showDetail = (idx) => {
+        const item = radarData[idx];
+        detailBox.innerHTML = `
+          <div class="radar-detail-title">
+            <span>${item.label}</span>
+            <span>偏好指数 ${item.score} / 100</span>
+          </div>
+          <div style="color: var(--ink-secondary);">${item.desc}</div>
+        `;
+      };
+
+      svg.querySelectorAll('.radar-point').forEach(pt => {
+        pt.addEventListener('mouseenter', () => showDetail(Number(pt.dataset.idx)));
+        pt.addEventListener('click', () => showDetail(Number(pt.dataset.idx)));
+        pt.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            showDetail(Number(pt.dataset.idx));
+          }
+        });
+      });
+    }
+
+    // Render Category Bar Chart
+    let currentMetric = 'hours';
+    function renderBars(metric) {
+      const container = document.getElementById('barList');
+      const maxVal = metric === 'hours'
+        ? Math.max(...categoryStats.map(c => c.hours))
+        : Math.max(...categoryStats.map(c => c.count));
+
+      container.innerHTML = categoryStats.map(c => {
+        const val = metric === 'hours' ? c.hours : c.count;
+        const pct = Math.max(4, (val / maxVal) * 100);
+        const label = metric === 'hours' ? `${c.hours} h` : `${c.count}本 / 完${c.finished}`;
+        return `
+          <div class="bar-row ${c.highlight ? 'highlight' : ''}">
+            <div class="bar-name">${c.name}</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: ${pct.toFixed(1)}%"></div>
+            </div>
+            <div class="bar-meta">${label}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Render Top 10 Invested Books
+    function renderTopBooks() {
+      const grid = document.getElementById('topBooksGrid');
+      grid.innerHTML = topBooks.map((b, i) => `
+        <div class="book-mini-card">
+          <div class="book-cover-box" title="${b.title}">
+            <img src="${b.cover}" alt="${b.title}封面" referrerpolicy="no-referrer" loading="lazy" onerror="this.style.display='none'; this.parentElement.textContent='${b.title.slice(0, 4)}';" />
+          </div>
+          <div class="book-mini-info">
+            <div class="book-mini-title" title="${b.title}">${i + 1}. ${b.title}</div>
+            <div class="book-mini-author">${b.author}</div>
+            <div class="book-mini-stats">
+              <span>${b.hours} 小时</span>
+              <span class="status-pill ${b.finished ? '' : 'reading'}">${b.finished ? '已读完' : `在读 ${b.progress}%`}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render Recent Reading Timeline
+    function renderTimeline() {
+      const box = document.getElementById('recentTimeline');
+      box.innerHTML = recentBooks.map(r => `
+        <div class="timeline-item">
+          <span class="tl-date">${r.date}</span>
+          <div class="tl-book">
+            <div class="tl-title">${r.title}</div>
+            <div class="tl-author">${r.author}</div>
+          </div>
+          <span class="tl-prog">${r.status}</span>
+        </div>
+      `).join('');
+    }
+
+    // Wishlist & Recommendations
+    const STORAGE_KEY = 'weread_custom_wishlist_v1';
+    let wishlist = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'));
+    let activeFilter = 'all';
+
+    function saveWishlist() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...wishlist]));
+      document.getElementById('wishCount').textContent = wishlist.size;
+    }
+
+    function renderRecommendations() {
+      const grid = document.getElementById('recGrid');
+      const items = activeFilter === 'all'
+        ? recommendations
+        : recommendations.filter(r => r.group === activeFilter);
+
+      grid.innerHTML = items.map(book => {
+        const isWished = wishlist.has(book.id);
+        return `
+          <article class="rec-card ${isWished ? 'wishlisted' : ''}" data-group="${book.group}">
+            <div class="rec-top">
+              <span class="rec-cat">${book.groupLabel}</span>
+              <span class="rec-match">${book.match}</span>
+            </div>
+            <h3 class="rec-title">《${book.title}》</h3>
+            <div class="rec-author">${book.author}</div>
+            <div class="rec-anchor">${book.anchor}</div>
+            <p class="rec-reason">${book.reason}</p>
+            <div class="rec-footer">
+              <div class="rec-tags">
+                ${book.tags.map(t => `<span class="rec-tag">${t}</span>`).join('')}
+              </div>
+              <button class="wish-btn" type="button" data-id="${book.id}">
+                ${isWished ? '✓ 已加想读' : '+ 想读'}
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('.wish-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          if (wishlist.has(id)) {
+            wishlist.delete(id);
+          } else {
+            wishlist.add(id);
+          }
+          saveWishlist();
+          renderRecommendations();
+        });
+      });
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 2400);
+    }
+
+    // Bind events
+    document.querySelectorAll('.seg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.seg-btn').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        currentMetric = btn.dataset.metric;
+        renderBars(currentMetric);
+      });
+    });
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        renderRecommendations();
+      });
+    });
+
+    document.getElementById('exportWishBtn').addEventListener('click', async () => {
+      const chosen = wishlist.size > 0
+        ? recommendations.filter(r => wishlist.has(r.id))
+        : recommendations;
+      const prefix = wishlist.size > 0 ? '我的微信读书想读书单' : '我的定制推荐书单（全部 11 本）';
+      const text = `${prefix}\n` + chosen.map((b, idx) => `${idx + 1}. 《${b.title}》 - ${b.author}（${b.groupLabel}）`).join('\n');
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast(`已复制 ${chosen.length} 本书单到剪贴板`);
+      } catch {
+        showToast('已准备好书单文本（请允许剪贴板权限或手动复制）');
+      }
+    });
+
+    // Init
+    renderRadar();
+    renderBars(currentMetric);
+    renderTopBooks();
+    renderTimeline();
+    saveWishlist();
+    renderRecommendations();
+  </script>
+</body>
+</html>

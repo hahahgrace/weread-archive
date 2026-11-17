@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>微信读书 · 阅读档案馆</title>
+  <style>
+    :root {
+      --bg-paper: #f6f3ec;
+      --bg-card: #fcfaf6;
+      --ink-primary: #1e1d1a;
+      --ink-secondary: #5c574e;
+      --ink-muted: #8a8377;
+      --border-soft: #e2dacb;
+      --accent-forest: #244c40;
+      --accent-forest-soft: #e4ede9;
+      --accent-terra: #b55437;
+      --accent-terra-soft: #f7e9e4;
+      --font-serif: "Songti SC", "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+      --font-sans: "PingFang SC", "Noto Sans SC", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-paper);
+      background-image: radial-gradient(rgba(36, 76, 64, 0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--ink-primary);
+      font-family: var(--font-sans);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 20px;
+    }
+
+    .wrap {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .eyebrow {
+      font-size: 12.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-terra);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.25;
+      margin-bottom: 14px;
+      color: var(--ink-primary);
+    }
+
+    .lead {
+      font-size: 16px;
+      color: var(--ink-secondary);
+      line-height: 1.7;
+      max-width: 660px;
+      margin-bottom: 34px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      text-decoration: none;
+      color: inherit;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 4px 20px rgba(30, 29, 26, 0.04);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(30, 29, 26, 0.09);
+      border-color: var(--accent-forest);
+    }
+
+    .badge {
+      align-self: flex-start;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: var(--accent-forest-soft);
+      color: var(--accent-forest);
+    }
+
+    .card.notes .badge {
+      background: var(--accent-terra-soft);
+      color: var(--accent-terra);
+    }
+
+    .card h2 {
+      font-family: var(--font-serif);
+      font-size: 23px;
+      line-height: 1.3;
+    }
+
+    .card p {
+      font-size: 14.5px;
+      color: var(--ink-secondary);
+      line-height: 1.65;
+    }
+
+    .cta {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border-soft);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--accent-forest);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card.notes .cta {
+      color: var(--accent-terra);
+    }
+
+    footer {
+      margin-top: 32px;
+      font-size: 12.5px;
+      color: var(--ink-muted);
+    }
+
+    @media (max-width: 700px) {
+      .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="eyebrow">WeRead Personal Reading Archive · 2026.11</div>
+    <h1>微信读书 · 阅读画像与笔记档案馆</h1>
+    <p class="lead">
+      汇集 570 本藏书偏好、793 小时阅读轨迹、定制推荐书单，以及跨 331 本书的 5,012 条划线与 52 条个人想法。
+    </p>
+
+    <div class="cards">
+      <a class="card" href="./weread-reading-profile.html">
+        <span class="badge">01 · Reading Profile &amp; Booklist</span>
+        <h2>阅读偏好画像与定制书单</h2>
+        <p>
+          六维阅读灵魂雷达图、学科投入时长分布、五大阅读面孔拆解、Top 10 投入作品，以及为你筛选的 11 本未读新书单与书架遗珠。
+        </p>
+        <div class="cta">
+          <span>进入阅读画像</span>
+          <span>→</span>
+        </div>
+      </a>
+
+      <a class="card notes" href="./weread-notes-viewer.html">
+        <span class="badge">02 · Highlights &amp; Thoughts</span>
+        <h2>全量划线与笔记档案馆</h2>
+        <p>
+          按 8 大类 → 书籍 → 章节归类的 331 本书全量笔记，支持全库关键字毫秒搜索、仅看个人想法筛选，以及单本书 Markdown 复制。
+        </p>
+        <div class="cta">
+          <span>翻阅笔记全集</span>
+          <span>→</span>
+        </div>
+      </a>
+    </div>
+
+    <footer>Archive generated on 2026-11-17 · Hosted on GitHub Pages</footer>
+  </main>
+</body>
+</html>
