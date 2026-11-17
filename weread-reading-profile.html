@@ -765,6 +765,31 @@
       color: #8f6012;
     }
 
+    .rec-card[data-group="science"] .rec-cat {
+      background: #e3f0f3;
+      color: #185c6b;
+    }
+
+    .rec-card[data-group="econ"] .rec-cat {
+      background: #ece8f5;
+      color: #4f3a83;
+    }
+
+    .rec-card[data-group="history"] .rec-cat {
+      background: #efe9df;
+      color: #6b4c26;
+    }
+
+    .rec-card[data-group="law"] .rec-cat {
+      background: #f5e5e8;
+      color: #7c2d3b;
+    }
+
+    .rec-card[data-group="art"] .rec-cat {
+      background: #e9f2e4;
+      color: #2f5e2e;
+    }
+
     .rec-match {
       font-size: 12px;
       font-weight: 700;
@@ -1179,18 +1204,23 @@
       <div class="section-head">
         <div>
           <div class="section-kicker">03 · Curated Recommendations</div>
-          <h2 id="rec-title" class="section-title">为你定制的 11 本私享推荐书单</h2>
+          <h2 id="rec-title" class="section-title">为你定制的 25 本私享书单（偏好延伸 + 破壁盲区）</h2>
         </div>
-        <p class="section-desc">已逐一核对你的 570 本书架及作者名单，以下 11 本均确认不在现有书架内。可点击「+ 想读」生成你的个人清单。</p>
+        <p class="section-desc">前半部分（11 本）顺着你的审美基因做深潜延伸；后半部分（14 本「✦ 破壁」）专门补齐自然科学、博弈经济、法学、艺术设计与硬科幻盲区，打破信息茧房。</p>
       </div>
 
       <div class="rec-toolbar">
         <div class="filter-pills" role="tablist" aria-label="按主题筛选推荐书籍">
-          <button class="filter-btn active" data-filter="all">全部推荐 (11)</button>
-          <button class="filter-btn" data-filter="magic">接棒百年孤独与奇想 (3)</button>
-          <button class="filter-btn" data-filter="walk">行走纪实与另类活法 (3)</button>
-          <button class="filter-btn" data-filter="women">女性命运与记忆切面 (3)</button>
-          <button class="filter-btn" data-filter="mind">现代孤独与自我安顿 (2)</button>
+          <button class="filter-btn active" data-filter="all">全部推荐 (25)</button>
+          <button class="filter-btn" data-filter="magic">百年孤独与奇想 (3)</button>
+          <button class="filter-btn" data-filter="walk">行走纪实与活法 (3)</button>
+          <button class="filter-btn" data-filter="women">女性命运与记忆 (3)</button>
+          <button class="filter-btn" data-filter="mind">孤独与自我安顿 (2)</button>
+          <button class="filter-btn" data-filter="science">✦ 破壁：硬核科学 (3)</button>
+          <button class="filter-btn" data-filter="econ">✦ 破壁：博弈经济概率 (4)</button>
+          <button class="filter-btn" data-filter="history">✦ 破壁：历史与信息史 (2)</button>
+          <button class="filter-btn" data-filter="law">✦ 破壁：法学与正义 (2)</button>
+          <button class="filter-btn" data-filter="art">✦ 破壁：艺术设计与科幻 (3)</button>
         </div>
         <div class="wishlist-summary">
           <span>已标记想读：<strong id="wishCount">0</strong> 本</span>
@@ -1305,6 +1335,13 @@
                 <span class="gem-badge">待翻阅</span>
               </div>
               <div class="gem-sub">伍尔夫、普拉斯与西蒙娜·薇依——三条极高浓度的女性精神意识流与思想手记，正合你的文学光谱。</div>
+            </div>
+            <div class="gem-item">
+              <div class="gem-head">
+                <span class="gem-title">书架里的「吃灰破壁书」</span>
+                <span class="gem-badge">✦ 跨界宝藏</span>
+              </div>
+              <div class="gem-sub">《万历十五年》《黑天鹅 / 非对称风险》《基因组 / 理性乐观派》《费曼讲物理》《法治的细节》《穷查理宝典》《你一生的故事》《美的历程（46%）》——早已在书架，直接开读即可破壁。</div>
             </div>
           </div>
         </div>
@@ -1520,6 +1557,160 @@
         anchor: '《当尼采哭泣》哲思传记感 × 加缪式的荒诞与自救',
         reason: '一半是科学怪才的传记，一半是作者在人生崩溃边缘的自我打捞——当「秩序」一次次被混沌粉碎，人该如何继续去爱与行动？好读、真诚，两三个小时就能读完却后劲悠长。',
         tags: ['存在主义自救', '非虚构叙事', '跨界宝藏']
+      },
+      {
+        id: 'gene',
+        group: 'science',
+        groupLabel: '✦ 破壁：硬核科学',
+        title: '基因传：众生之源',
+        author: '[美] 悉达多·穆克吉',
+        match: '✦ 破壁必读',
+        anchor: '补齐「科学技术仅 15 分钟」盲区 · 科学史写成家族史诗',
+        reason: '把人类发现基因、解码生命密码的百年历史写成一部跌宕起伏的家族史诗——科学极其硬核，但文字优雅得像文学作品，是你走进现代生命科学的绝佳入口。',
+        tags: ['生命科学史', '文学级文笔', '实证思维']
+      },
+      {
+        id: 'selfish-gene',
+        group: 'science',
+        groupLabel: '✦ 破壁：硬核科学',
+        title: '自私的基因',
+        author: '[英] 理查德·道金斯',
+        match: '✦ 破壁必读',
+        anchor: '用演化博弈视角对冲纯存在主义与文学主观感受',
+        reason: '冷酷又精妙地解释了生物为何进化出利他、合作、母爱乃至欺骗。把许多原本归因于道德或社会建构的现象还原到演化算法层面，会带来剧烈的视角冲击。',
+        tags: ['演化生物学', '思维模型', '反直觉']
+      },
+      {
+        id: 'quantum',
+        group: 'science',
+        groupLabel: '✦ 破壁：硬核科学',
+        title: '上帝掷骰子吗：量子物理史话',
+        author: '曹天元',
+        match: '✦ 破壁必读',
+        anchor: '补齐现代物理学基石 · 几乎零数学公式的科普神作',
+        reason: '像武侠/侦探小说一样讲清 20 世纪最颠覆人类常识的物理学革命——你会直观感受到，科学在最深处的不确定性甚至比哲学和魔幻现实更震撼。',
+        tags: ['量子力学史', '零公式入门', '世界观刷新']
+      },
+      {
+        id: 'thinking-strategic',
+        group: 'econ',
+        groupLabel: '✦ 破壁：博弈经济概率',
+        title: '策略思维',
+        author: '[美] 阿维纳什·K·迪克西特 / 巴里·J·奈尔伯夫',
+        match: '✦ 破壁必读',
+        anchor: '对冲单一「批判视角」· 给社会观察装上博弈推演引擎',
+        reason: '补上纳什均衡、可信承诺与逆向归纳等动态博弈工具。很多社会困境不是简单的「谁坏」，而是多方激励与均衡结构使然，读完看新闻和职场协作会更通透。',
+        tags: ['博弈论入门', '决策推演', '策略思维']
+      },
+      {
+        id: 'milk-coke',
+        group: 'econ',
+        groupLabel: '✦ 破壁：博弈经济概率',
+        title: '牛奶可乐经济学',
+        author: '[美] 罗伯特·弗兰克',
+        match: '✦ 破壁推荐',
+        anchor: '用「成本效益与微观激励」解释反直觉日常现象',
+        reason: '轻快有趣的微观经济学随笔——从为什么牛奶装方盒而可乐装圆瓶，到制度设计的隐性成本，训练自己用价格信号与激励机制而非纯情绪理解现实。',
+        tags: ['微观经济学', '成本效益', '轻松有趣']
+      },
+      {
+        id: 'freakonomics',
+        group: 'econ',
+        groupLabel: '✦ 破壁：博弈经济概率',
+        title: '魔鬼经济学',
+        author: '[美] 史蒂芬·列维特 / 史蒂芬·都伯纳',
+        match: '✦ 破壁推荐',
+        anchor: '用实证数据拆穿看似正确的「常识幻觉」',
+        reason: '用真实统计与对照实验回答一连串怪问题，演示数据证据如何推翻一厢情愿的道德直觉，是极佳的实证分析思维操练。',
+        tags: ['实证数据', '因果推断', '反常识']
+      },
+      {
+        id: 'lady-tasting-tea',
+        group: 'econ',
+        groupLabel: '✦ 破壁：博弈经济概率',
+        title: '女士品茶：20世纪统计学的变革',
+        author: '[美] 戴维·萨尔斯伯格',
+        match: '✦ 破壁必读',
+        anchor: '补齐概率统计直觉 · 理解 AI/医学/金融的底层方法论',
+        reason: '用科学家八卦与故事串起统计学百年史，讲清现代科学如何学会「从混沌和不确定性中提炼真相」，避免在概率和抽样偏差里产生误判。',
+        tags: ['统计学史', '概率思维', '科学方法论']
+      },
+      {
+        id: 'guns-germs-steel',
+        group: 'history',
+        groupLabel: '✦ 破壁：历史与信息史',
+        title: '枪炮、病菌与钢铁',
+        author: '[美] 贾雷德·戴蒙德',
+        match: '✦ 破壁必读',
+        anchor: '跳出「4/5 历史笔记全是曾国藩」的单一史观',
+        reason: '从地理轴线、农作物驯化、牲畜病菌与铁器生态硬桥硬马推演人类文明分化——把历史从「帝王将相性格」拉到生态与地理系统尺度。',
+        tags: ['全球史', '生态地理', '系统史观']
+      },
+      {
+        id: 'the-information',
+        group: 'history',
+        groupLabel: '✦ 破壁：历史与信息史',
+        title: '信息简史',
+        author: '[美] 詹姆斯·格雷克',
+        match: '✦ 破壁必读',
+        anchor: '打通「人文文学文字」与「计算机工程比特」的桥梁',
+        reason: '从非洲鼓语、字母表、印刷术一路写到图灵、香农信息论与 DNA 编码——完美焊接起你平时读的文学世界与白天写的计算机代码。',
+        tags: ['信息论史', '文理跨界', '技术文明']
+      },
+      {
+        id: 'speluncean',
+        group: 'law',
+        groupLabel: '✦ 破壁：法学与正义',
+        title: '洞穴奇案',
+        author: '[美] 彼得·萨伯',
+        match: '✦ 破壁必读',
+        anchor: '补齐法学规则边界与「程序正义」逻辑训练',
+        reason: '仅百余页却极其烧脑：五名被困洞穴的探险者抽签食人求生，获救后该不该判死刑？十四位大法官轮番撰写判词，让你一次看尽法理学核心交锋。',
+        tags: ['法理学', '思维体操', '程序正义']
+      },
+      {
+        id: 'justice',
+        group: 'law',
+        groupLabel: '✦ 破壁：法学与正义',
+        title: '公正：该如何做是好？',
+        author: '[美] 迈克尔·桑德尔',
+        match: '✦ 破壁推荐',
+        anchor: '训练「在价值冲突中清晰论证自己立场」的能力',
+        reason: '通过电车难题、市场边界与真实判例，把抽象伦理哲学变成一次次具体抉择——能极大提升你讨论公共议题与表达个人观点时的结构清晰度。',
+        tags: ['伦理哲学', '公共思辨', '哈佛公开课']
+      },
+      {
+        id: 'ways-of-seeing',
+        group: 'art',
+        groupLabel: '✦ 破壁：艺术设计与科幻',
+        title: '观看之道',
+        author: '[英] 约翰·伯格',
+        match: '✦ 破壁必读',
+        anchor: '补齐「艺术大类仅 26 分钟」空白 · 与波伏瓦/摄影共振',
+        reason: '极其犀利的视觉艺术评论小书，剖析油画、女性身体凝视与现代广告图像背后的权力关系——与你的女性主义、摄影兴趣严丝合缝（微信读书暂缺原版，建议纸书/导入）。',
+        tags: ['视觉文化', '艺术批评', '图像权力']
+      },
+      {
+        id: 'design-everyday-things',
+        group: 'art',
+        groupLabel: '✦ 破壁：艺术设计与科幻',
+        title: '设计心理学',
+        author: '[美] 唐·诺曼',
+        match: '✦ 破壁必读',
+        anchor: '前端/全栈工程师与日常美学的绝佳交汇点',
+        reason: '讲透「示能、反馈、心智模型与防错设计」——读完以后你无论是看一扇门把手、一个开关，还是自己写页面表单与交互提示，眼光都会彻底升级。',
+        tags: ['交互设计', '心智模型', '工程美学']
+      },
+      {
+        id: 'project-hail-mary',
+        group: 'art',
+        groupLabel: '✦ 破壁：艺术设计与科幻',
+        title: '挽救计划',
+        author: '[美] 安迪·威尔',
+        match: '✦ 破壁推荐',
+        anchor: '打破忧郁文学滤镜 · 体验纯粹「理工科乐观主义」硬科幻',
+        reason: '《火星救援》作者神作，失忆主角醒在几光年外的太空飞船里，全书没有苦大仇深的悲情，全靠物理化学推理与跨物种协作一步步解谜通关，痛快又治愈。',
+        tags: ['硬科幻', '理工乐观主义', '高能叙事']
       }
     ];
 
@@ -1751,7 +1942,7 @@
       const chosen = wishlist.size > 0
         ? recommendations.filter(r => wishlist.has(r.id))
         : recommendations;
-      const prefix = wishlist.size > 0 ? '我的微信读书想读书单' : '我的定制推荐书单（全部 11 本）';
+      const prefix = wishlist.size > 0 ? '我的微信读书想读书单' : '我的定制推荐书单（全部 25 本）';
       const text = `${prefix}\n` + chosen.map((b, idx) => `${idx + 1}. 《${b.title}》 - ${b.author}（${b.groupLabel}）`).join('\n');
       try {
         await navigator.clipboard.writeText(text);
