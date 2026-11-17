@@ -67,8 +67,12 @@
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .cards { grid-template-columns: 1fr; }
     }
 
     .card {
@@ -174,6 +178,18 @@
         </p>
         <div class="cta">
           <span>翻阅笔记全集</span>
+          <span>→</span>
+        </div>
+      </a>
+
+      <a class="card" href="./weread-corpus.html">
+        <span class="badge" style="background: #f9f1df; color: #8f6012;">03 · Writing &amp; Thought Corpus</span>
+        <h2>写作语料与主题划线库</h2>
+        <p>
+          将 5,011 条划线按「描写景色」「刻画心情」「高超修辞」「人生思辨」「社会观察」「硬核知识」「对话叙事」7 维重构，随时抽卡激发写作灵感。
+        </p>
+        <div class="cta" style="color: #8f6012;">
+          <span>进入写作语料库</span>
           <span>→</span>
         </div>
       </a>
