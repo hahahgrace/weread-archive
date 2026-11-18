@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 微信读书年度阅读报告 · Wrapped</title>
+  <style>
+    :root {
+      --bg-paper: #f6f3ec;
+      --bg-card: #fcfaf6;
+      --bg-muted: #ebe4d6;
+      --ink-primary: #1e1d1a;
+      --ink-secondary: #59534a;
+      --ink-muted: #8a8377;
+      --border-soft: #e0d7c6;
+      --forest-deep: #18352c;
+      --forest-mid: #244c40;
+      --forest-light: #e4ede9;
+      --terra: #b55437;
+      --terra-soft: #f7e9e4;
+      --amber: #c78d24;
+      --amber-soft: #fbf2df;
+      --font-serif: "Songti SC", "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+      --font-sans: "PingFang SC", "Noto Sans SC", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-paper);
+      color: var(--ink-primary);
+      font-family: var(--font-sans);
+      font-size: 15.5px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Sticky nav */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(246, 243, 236, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: 14px;
+    }
+
+    .brand {
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: 16.5px;
+      color: var(--forest-mid);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink-secondary);
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover { color: var(--forest-mid); }
+
+    /* Cover Hero */
+    .hero-banner {
+      background: linear-gradient(135deg, var(--forest-deep) 0%, #21453a 60%, #2d594b 100%);
+      color: #f6f3ec;
+      padding: 58px 0 54px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #f3c878;
+      border: 1px solid rgba(243, 200, 120, 0.4);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(32px, 4.5vw, 50px);
+      line-height: 1.18;
+      font-weight: 700;
+      margin-bottom: 16px;
+      max-width: 820px;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: #f3c878;
+    }
+
+    .hero-lead {
+      font-size: 16.5px;
+      color: rgba(246, 243, 236, 0.86);
+      max-width: 760px;
+      line-height: 1.75;
+      margin-bottom: 34px;
+    }
+
+    .hero-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .hero-kpi {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      padding: 18px 20px;
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-kpi-lbl {
+      font-size: 12.5px;
+      color: rgba(246, 243, 236, 0.72);
+      margin-bottom: 6px;
+    }
+
+    .hero-kpi-val {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hero-kpi-val span {
+      font-size: 14px;
+      font-family: var(--font-sans);
+      font-weight: 400;
+      color: #f3c878;
+      margin-left: 4px;
+    }
+
+    .hero-kpi-sub {
+      font-size: 12px;
+      color: rgba(246, 243, 236, 0.68);
+      margin-top: 6px;
+    }
+
+    /* Sections */
+    section {
+      padding: 44px 0 20px;
+    }
+
+    .sec-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border-soft);
+      padding-bottom: 14px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .sec-kicker {
+      font-size: 11.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--terra);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .sec-title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .sec-desc {
+      font-size: 13.5px;
+      color: var(--ink-secondary);
+      max-width: 460px;
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 24px 26px;
+      box-shadow: 0 4px 20px rgba(30, 29, 26, 0.04);
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .panel-title {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .panel-sub {
+      font-size: 12.5px;
+      color: var(--ink-muted);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .grid-2-equal {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    /* Monthly chart & inspector */
+    .month-bars {
+      display: grid;
+      grid-template-columns: repeat(11, 1fr);
+      gap: 10px;
+      align-items: end;
+      height: 220px;
+      padding: 20px 8px 0;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .m-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+      cursor: pointer;
+    }
+
+    .m-val {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--ink-secondary);
+      margin-bottom: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .m-bar {
+      width: 100%;
+      max-width: 34px;
+      border-radius: 8px 8px 2px 2px;
+      background: linear-gradient(180deg, #3c7361, var(--forest-mid));
+      transition: transform 0.15s, filter 0.15s;
+      position: relative;
+    }
+
+    .m-col.peak .m-bar {
+      background: linear-gradient(180deg, #d87455, var(--terra));
+    }
+
+    .m-col.active .m-bar,
+    .m-col:hover .m-bar {
+      transform: scaleY(1.04);
+      filter: brightness(1.08);
+      box-shadow: 0 0 0 2px var(--amber);
+    }
+
+    .m-thought-dot {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+    }
+
+    .m-lbls {
+      display: grid;
+      grid-template-columns: repeat(11, 1fr);
+      gap: 10px;
+      padding: 8px 8px 0;
+      text-align: center;
+      font-size: 12px;
+      color: var(--ink-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .month-story-box {
+      margin-top: 18px;
+      background: var(--bg-paper);
+      border: 1px solid var(--border-soft);
+      border-left: 4px solid var(--terra);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    /* Polar clock SVG */
+    .seg-group {
+      display: inline-flex;
+      background: var(--bg-muted);
+      padding: 3px;
+      border-radius: 999px;
+      gap: 2px;
+    }
+
+    .seg-btn {
+      border: none;
+      background: transparent;
+      color: var(--ink-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: var(--font-sans);
+    }
+
+    .seg-btn.active {
+      background: var(--bg-card);
+      color: var(--forest-mid);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    .clock-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .clock-svg {
+      width: 100%;
+      max-width: 340px;
+      height: auto;
+      overflow: visible;
+    }
+
+    .clock-caption {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--ink-secondary);
+      text-align: center;
+      background: var(--bg-paper);
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-soft);
+      width: 100%;
+    }
+
+    /* Heatmap */
+    .heatmap-scroll {
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+
+    .heatmap-grid {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-rows: repeat(7, 14px);
+      gap: 4px;
+      width: max-content;
+    }
+
+    .hm-cell {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      background: #e9e2d4;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    .hm-cell:hover {
+      transform: scale(1.25);
+      outline: 2px solid var(--ink-primary);
+    }
+
+    .hm-l1 { background: #b8d3c8; }
+    .hm-l2 { background: #6ea590; }
+    .hm-l3 { background: #2d6b57; }
+    .hm-l4 { background: #b55437; }
+
+    .hm-legend {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+      font-size: 12.5px;
+      color: var(--ink-muted);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hm-tooltip-bar {
+      font-size: 13px;
+      color: var(--forest-mid);
+      font-weight: 600;
+      min-height: 22px;
+    }
+
+    /* Weekday horizontal bars */
+    .wd-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .wd-row {
+      display: grid;
+      grid-template-columns: 46px 1fr 48px;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .wd-track {
+      height: 12px;
+      background: var(--bg-muted);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .wd-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--forest-mid), #488570);
+    }
+
+    .wd-row.weekend .wd-fill {
+      background: linear-gradient(90deg, var(--amber), #dfab48);
+    }
+
+    /* 8-year chronicle */
+    .chronicle-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .yr-card {
+      background: var(--bg-paper);
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      padding: 15px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .yr-card.current {
+      border-color: var(--terra);
+      background: #fffdfb;
+      box-shadow: 0 4px 14px rgba(181, 84, 55, 0.08);
+    }
+
+    .yr-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .yr-num {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--forest-mid);
+    }
+
+    .yr-card.current .yr-num { color: var(--terra); }
+
+    .yr-stat {
+      font-size: 12px;
+      color: var(--ink-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .yr-theme {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink-primary);
+    }
+
+    .yr-books {
+      font-size: 12px;
+      color: var(--ink-secondary);
+      line-height: 1.5;
+    }
+
+    /* Awards & Word Cloud */
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .award-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .award-kicker {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--terra);
+    }
+
+    .award-main {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink-primary);
+    }
+
+    .award-sub {
+      font-size: 13px;
+      color: var(--ink-secondary);
+      line-height: 1.55;
+    }
+
+    .wordcloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 8px;
+    }
+
+    .wc-word {
+      font-family: var(--font-serif);
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: var(--bg-paper);
+      border: 1px solid var(--border-soft);
+      transition: transform 0.15s;
+      cursor: default;
+    }
+
+    .wc-word:hover {
+      transform: scale(1.08);
+    }
+
+    /* Thoughts gallery */
+    .thoughts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px;
+    }
+
+    .thought-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-top: 3px solid var(--forest-mid);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .th-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--ink-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .th-book {
+      font-weight: 700;
+      color: var(--forest-mid);
+    }
+
+    .th-quote {
+      font-size: 13px;
+      color: var(--ink-secondary);
+      background: var(--bg-paper);
+      border-left: 3px solid #cbbba0;
+      padding: 8px 11px;
+      border-radius: 0 6px 6px 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .th-my {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--ink-primary);
+      line-height: 1.68;
+      white-space: pre-wrap;
+    }
+
+    footer {
+      margin-top: 44px;
+      padding: 28px 0 48px;
+      border-top: 1px solid var(--border-soft);
+      text-align: center;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    @media (max-width: 900px) {
+      .hero-kpis { grid-template-columns: repeat(2, 1fr); }
+      .grid-2, .grid-2-equal { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-kpis, .thoughts-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">📖 2026 微信读书年度阅读报告 · Wrapped</div>
+      <nav class="nav-links" aria-label="年终报告章节导航">
+        <a href="#waves">年度节奏</a>
+        <a href="#clock">阅读生物钟</a>
+        <a href="#heatmap">日历热力图</a>
+        <a href="#chronicle">八年编年史</a>
+        <a href="#awards">年度之最</a>
+        <a href="#thoughts">年度想法</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero-banner">
+    <div class="container hero-content">
+      <div class="hero-badge">WeRead 2026 Annual Wrapped · 2018 — 2026</div>
+      <h1 class="hero-title">深夜守灯的<em>思想漫游者</em>：<br>你的 2026 阅读年终报告</h1>
+      <p class="hero-lead">
+        这一年，你在 <strong>120 个日夜</strong>里与书页发生共鸣，划下 <strong>496 条重点</strong>、写下 <strong>12 段真诚批注</strong>。从开年对身体节律的重启，到春夏之际的政治与反乌托邦深潜，再到夏秋回归女性代际与旷野散文，并在初冬戴上墨水屏翻开《百年孤独》——每一步都有迹可循。
+      </p>
+
+      <div class="hero-kpis">
+        <div class="hero-kpi">
+          <div class="hero-kpi-lbl">2026 年活跃笔记天数</div>
+          <div class="hero-kpi-val">120<span>天</span></div>
+          <div class="hero-kpi-sub">全年最长连续划线 7 天（2/2 - 2/8）</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-lbl">2026 年度划线 &amp; 想法</div>
+          <div class="hero-kpi-val">496<span>划 / 12想</span></div>
+          <div class="hero-kpi-sub">跨 29 本重点批注书（含在读共 40+ 本）</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-lbl">2026 黄金阅读时段</div>
+          <div class="hero-kpi-val">23:00<span>峰值</span></div>
+          <div class="hero-kpi-sub">21–24 点独揽全年 55% 的深夜思考</div>
+        </div>
+        <div class="hero-kpi">
+          <div class="hero-kpi-lbl">八年累计阅读资产</div>
+          <div class="hero-kpi-val">793<span>小时</span></div>
+          <div class="hero-kpi-sub">592 本书架藏书 · 731 个历史笔记日</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- Section 1: 2026 Monthly Waves & Top Books -->
+    <section id="waves">
+      <div class="sec-head">
+        <div>
+          <div class="sec-kicker">01 · Monthly Rhythm</div>
+          <h2 class="sec-title">2026 年度三波阅读浪潮</h2>
+        </div>
+        <p class="sec-desc">点击任意月份柱子，查看当月的精神焦点与主力书单（💭 代表当月写下的个人想法）。</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3 class="panel-title">1–11 月逐月划线起伏</h3>
+              <p class="panel-sub">2 月健康重启 · 5–6 月思辨双峰 · 8–10 月文学大丰收</p>
+            </div>
+          </div>
+          <div id="monthBars" class="month-bars"></div>
+          <div id="monthLabels" class="m-lbls"></div>
+          <div id="monthStory" class="month-story-box"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3 class="panel-title">2026 年度高互动 Top 10</h3>
+              <p class="panel-sub">按 2026 年内划线与想法数量排序</p>
+            </div>
+          </div>
+          <div id="top2026List" class="wd-bars"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: 24-Hour Polar Clock & Weekday Pattern -->
+    <section id="clock">
+      <div class="sec-head">
+        <div>
+          <div class="sec-kicker">02 · Circadian Clock</div>
+          <h2 class="sec-title">阅读生物钟的进化：从「午间+夜读」到「纯粹深夜派」</h2>
+        </div>
+        <p class="sec-desc">对比 2026 年与往年（2018–2025）的 24 小时分布，能清晰看见你的作息变迁。</p>
+      </div>
+
+      <div class="grid-2-equal">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3 class="panel-title">24 小时极坐标阅读表盘</h3>
+              <p class="panel-sub">扇区越向外延伸，代表该小时划线越多</p>
+            </div>
+            <div class="seg-group" role="tablist">
+              <button class="seg-btn active" data-clock="2026">2026 年</button>
+              <button class="seg-btn" data-clock="hist">2018–2025 往年</button>
+            </div>
+          </div>
+          <div class="clock-wrap">
+            <svg id="clockSvg" class="clock-svg" viewBox="0 0 340 340" role="img" aria-label="24小时阅读时钟图"></svg>
+            <div id="clockCaption" class="clock-caption"></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3 class="panel-title">周一至周日的阅读性格</h3>
+              <p class="panel-sub">2026 年工作日日均 74 划 vs 周末日均 63 划</p>
+            </div>
+          </div>
+          <div id="wdBars" class="wd-bars"></div>
+          <div class="month-story-box" style="margin-top: 22px; border-left-color: var(--forest-mid);">
+            <div style="font-weight: 700; color: var(--forest-mid); margin-bottom: 4px;">工作日的「精神避难所」</div>
+            <div style="font-size: 13.5px; color: var(--ink-secondary);">
+              周三（95 条）、周四（94 条）、周一（88 条）反而是你划线下笔最勤的工作日夜里，周日（90 条）则用来完成大块长篇收尾——书本显然是你对抗工作日消耗的稳定锚点。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: 322-Day Heatmap -->
+    <section id="heatmap">
+      <div class="sec-head">
+        <div>
+          <div class="sec-kicker">03 · Daily Footprint</div>
+          <h2 class="sec-title">2026 全年 322 天笔记日历热力图</h2>
+        </div>
+        <p class="sec-desc">每一个方格代表 2026 年的某一天，颜色越深代表当天留下的思考越密集（悬停查看详情）。</p>
+      </div>
+
+      <div class="panel">
+        <div class="heatmap-scroll">
+          <div id="heatmapGrid" class="heatmap-grid"></div>
+        </div>
+        <div class="hm-legend">
+          <div id="hmTooltip" class="hm-tooltip-bar">把鼠标移到任意日期方格上，查看当天的读书足迹</div>
+          <div style="display: flex; align-items: center; gap: 5px;">
+            <span>少</span>
+            <span class="hm-cell" style="display:inline-block"></span>
+            <span class="hm-cell hm-l1" style="display:inline-block"></span>
+            <span class="hm-cell hm-l2" style="display:inline-block"></span>
+            <span class="hm-cell hm-l3" style="display:inline-block"></span>
+            <span class="hm-cell hm-l4" style="display:inline-block"></span>
+            <span>多（15+ 划）</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: 8-Year Chronicle -->
+    <section id="chronicle">
+      <div class="sec-head">
+        <div>
+          <div class="sec-kicker">04 · 2018–2026 Evolution</div>
+          <h2 class="sec-title">八年阅读编年史：你是如何长成今天的自己</h2>
+        </div>
+        <p class="sec-desc">从 2018 年的青涩随笔，到 2021 年技术猛冲、2024 年社科觉醒、2025–2026 年文学回归。</p>
+      </div>
+
+      <div class="panel">
+        <svg id="chronicleSvg" viewBox="0 0 1000 220" style="width: 100%; height: auto; overflow: visible;" role="img" aria-label="2018到2026年划线趋势图"></svg>
+        <div id="chronicleGrid" class="chronicle-grid"></div>
+      </div>
+    </section>
+
+    <!-- Section 5: Annual Awards & Keyword Cloud -->
+    <section id="awards">
+      <div class="sec-head">
+        <div>
+          <div class="sec-kicker">05 · Highlights &amp; Keywords</div>
+          <h2 class="sec-title">2026 年度阅读之最 &amp; 高频关注母题</h2>
+        </div>
+      </div>
+
+      <div class="awards-grid">
+        <div class="award-card">
+          <span class="award-kicker">🏆 年度最长情陪伴</span>
+          <div class="award-main">《可能性的艺术》</div>
+          <div class="award-sub">全年累计 <strong>127 条划线 + 4 条长批注</strong>（投入 19.7 小时），横跨五一劳动节与整个初夏。</div>
+        </div>
+        <div class="award-card">
+          <span class="award-kicker">🌙 年度最晚深夜跨夜</span>
+          <div class="award-main">05-01 00:01</div>
+          <div class="award-sub">五一零点一分还在读《美丽新世界》：“一个人能够抵御痛苦，但却不能抵御幸福。”</div>
+        </div>
+        <div class="award-card">
+          <span class="award-kicker">🔥 年度单日高产巅峰</span>
+          <div class="award-main">2026-02-11 · 29 划</div>
+          <div class="award-sub">大年初四前后一口气深读《真原医》，留下 29 条关于身心与预防医学的笔记。</div>
+        </div>
+        <div class="award-card">
+          <span class="award-kicker">🎋 年度最治愈阅读时刻</span>
+          <div class="award-main">《夜晚的潜水艇》</div>
+          <div class="award-sub">10 月 8 日夜里读完《竹峰寺》，忍不住写下：“喜欢这个故事，读得我好幸福🎋”。</div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top: 20px;">
+        <div class="panel-head">
+          <div>
+            <h3 class="panel-title">2026 年度思维关键词云</h3>
+            <p class="panel-sub">统计自全年 496 条划线的真实词频（字号越大代表出现频率越高）</p>
+          </div>
+        </div>
+        <div id="wordCloud" class="wordcloud"></div>
+      </div>
+    </section>
+
+    <!-- Section 6: 2026 All 12 Personal Thoughts -->
+    <section id="thoughts">
+      <div class="sec-head">
+        <div>
+          <div class="sec-kicker">06 · Letters To Yourself</div>
+          <h2 class="sec-title">2026 年你亲手写下的 12 句真实回响</h2>
+        </div>
+        <p class="sec-desc">划线是作者的话，这 12 条批注才是 2026 年你自己的声音。</p>
+      </div>
+
+      <div id="thoughtsGrid" class="thoughts-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      2026 微信读书年终阅读报告 · 全部图表均由你账户 2018–2026 年真实时间戳与书架数据生成
+    </div>
+  </footer>
+
+  <script>
+    const D = {"chronicle": [{"year": 2018, "books": 19, "hl": 67, "rv": 0, "days": 23, "theme": "启程 · 青春沟通与生活初探", "top": [{"title": "龙应台“人生三书”之二：亲爱的安德烈", "cnt": 12}, {"title": "一个人的好天气", "cnt": 8}, {"title": "爱你就像爱生命", "cnt": 8}]}, {"year": 2019, "books": 14, "hl": 27, "rv": 0, "days": 17, "theme": "积淀 · 逻辑思考与随笔入门", "top": [{"title": "一本小小的蓝色逻辑书", "cnt": 6}, {"title": "我要快乐，不必正常", "cnt": 6}, {"title": "蒙田随笔", "cnt": 3}]}, {"year": 2020, "books": 47, "hl": 380, "rv": 1, "days": 48, "theme": "内观 · 饮食照顾与情绪管理", "top": [{"title": "学会吃饭", "cnt": 70}, {"title": "一个叫欧维的男人决定去死（同名电影原著）", "cnt": 32}, {"title": "驾驭情绪的力量", "cnt": 30}]}, {"year": 2021, "books": 62, "hl": 822, "rv": 2, "days": 88, "theme": "硬核 · 前端架构爆发与定投启蒙", "top": [{"title": "深入浅出Vue.js", "cnt": 284}, {"title": "定投十年财务自由", "cnt": 43}, {"title": "傅雷家书", "cnt": 37}]}, {"year": 2022, "books": 43, "hl": 600, "rv": 3, "days": 78, "theme": "系统 · 行为习惯、心流与认知升级", "top": [{"title": "福格行为模型：你会越来越有能量", "cnt": 70}, {"title": "心流：最优体验心理学", "cnt": 67}, {"title": "纳瓦尔宝典", "cnt": 57}]}, {"year": 2023, "books": 21, "hl": 357, "rv": 3, "days": 43, "theme": "养正 · 中医经络与心理重构", "top": [{"title": "改变你想法的101篇文章", "cnt": 106}, {"title": "曲黎敏精讲《黄帝内经》（套装4册）", "cnt": 60}, {"title": "黄帝内经：上古天真", "cnt": 55}]}, {"year": 2024, "books": 73, "hl": 1451, "rv": 3, "days": 145, "theme": "觉醒 · 历史传记、反消费与女性主义大年", "top": [{"title": "曾国藩传（张宏杰全新增补版）", "cnt": 170}, {"title": "服美役：美是如何奴役和消费女性的", "cnt": 161}, {"title": "工作、消费主义和新穷人", "cnt": 120}]}, {"year": 2025, "books": 59, "hl": 812, "rv": 28, "days": 169, "theme": "抒怀 · 加缪、红楼梦与想法爆发（28 篇）", "top": [{"title": "反与正·婚礼集·夏天集（郭宏安译加缪文集）", "cnt": 64}, {"title": "红楼梦（人民文学版）", "cnt": 62}, {"title": "一间只属于自己的房间（果麦经典）", "cnt": 46}]}, {"year": 2026, "books": 29, "hl": 496, "rv": 12, "days": 120, "theme": "深潜 · 政治思辨、女性文学与墨水屏新章", "top": [{"title": "可能性的艺术：比较政治学30讲", "cnt": 127}, {"title": "真原医：21世纪完整的预防医学", "cnt": 81}, {"title": "明亮的夜晚", "cnt": 45}]}], "monthly2026": [{"month": 1, "hl": 19, "rv": 0, "note": "新年从刘子超的南亚纪实与阿富汗女性来信出发，在克制的纪实文字里校准视角。", "top": [{"title": "沿着季风的方向（《失落的卫星》作者刘子超代表作）", "cnt": 12}, {"title": "一个阿富汗女人的来信（轻纪实）", "cnt": 4}, {"title": "对工作说不", "cnt": 2}]}, {"month": 2, "hl": 91, "rv": 0, "note": "全年首个阅读高峰：连续 7 天打卡，2 月 11 日单日划线 29 条，系统深读《真原医》。", "top": [{"title": "真原医：21世纪完整的预防医学", "cnt": 81}, {"title": "精神健康讲记_9787515218885", "cnt": 7}, {"title": "老实人（伏尔泰作品集）", "cnt": 3}]}, {"month": 3, "hl": 32, "rv": 0, "note": "转入反乌托邦经典，《1984》与《动物农场》叠加马克思手稿，思考权力与异化。", "top": [{"title": "1984", "cnt": 22}, {"title": "动物农场", "cnt": 5}, {"title": "1844年经济学哲学手稿", "cnt": 3}]}, {"month": 4, "hl": 31, "rv": 1, "note": "深读《美丽新世界》，并在 4 月 30 日深夜跨入五一零点读完尾声的“温柔乡”寓言。", "top": [{"title": "美丽新世界", "cnt": 21}, {"title": "1984", "cnt": 10}]}, {"month": 5, "hl": 90, "rv": 5, "note": "全年思想输出最强月！5 月 1 日起狂读《可能性的艺术》与《她对此感到厌烦3》，留下 5 条长想法。", "top": [{"title": "可能性的艺术：比较政治学30讲", "cnt": 52}, {"title": "她对此感到厌烦3", "cnt": 25}, {"title": "写出我心：普通人如何通过写作表达自己", "cnt": 9}]}, {"month": 6, "hl": 90, "rv": 1, "note": "收尾《可能性的艺术》（累计 127 划）与伏尔泰《老实人》，定下“耕种自己花园”的基调。", "top": [{"title": "可能性的艺术：比较政治学30讲", "cnt": 75}, {"title": "老实人（伏尔泰作品集）", "cnt": 9}, {"title": "一切愁云消散", "cnt": 6}]}, {"month": 7, "hl": 36, "rv": 0, "note": "暑期切入费兰特《被遗弃的日子》与创作原理，开始关注写作与表达结构。", "top": [{"title": "埃莱娜·费兰特作品系列：被遗弃的日子", "cnt": 21}, {"title": "喜剧：灵感、技巧、突破瓶颈的创作原理", "cnt": 9}, {"title": "一切愁云消散", "cnt": 5}]}, {"month": 8, "hl": 29, "rv": 2, "note": "遇到年度最温柔的小说《明亮的夜晚》，写下“关心‘她’本身，而非社会时钟”。", "top": [{"title": "明亮的夜晚", "cnt": 26}, {"title": "一切愁云消散", "cnt": 2}, {"title": "生育制度", "cnt": 1}]}, {"month": 9, "hl": 39, "rv": 1, "note": "读完《明亮的夜晚》与《时间贫困》，在秋夜打开陈春成《夜晚的潜水艇》。", "top": [{"title": "明亮的夜晚", "cnt": 19}, {"title": "时间贫困", "cnt": 11}, {"title": "夜晚的潜水艇", "cnt": 5}]}, {"month": 10, "hl": 34, "rv": 1, "note": "大丰收之月：密集读完《冬牧场》《沿着季风的方向》《东京八平米》《我用中文做了场梦》等 6 本书。", "top": [{"title": "夜晚的潜水艇", "cnt": 25}, {"title": "恨海情天文学短篇集：我爱你，你死吧", "cnt": 4}, {"title": "赞美闲散（果麦经典）", "cnt": 3}]}, {"month": 11, "hl": 5, "rv": 1, "note": "11 月入手墨水屏阅读器，读完柴静《看见》，并正式翻开《百年孤独》开启长篇远航。", "top": [{"title": "百年孤独", "cnt": 5}]}], "hour2026": [2, 0, 0, 0, 0, 0, 0, 0, 12, 21, 27, 21, 16, 33, 11, 4, 9, 6, 6, 26, 30, 50, 102, 120], "hourHist": [31, 15, 0, 0, 0, 0, 0, 13, 74, 117, 218, 175, 556, 571, 274, 221, 221, 323, 193, 225, 203, 291, 550, 245], "wd2026": [88, 27, 95, 94, 66, 36, 90], "calendar2026": [{"d": "2026-01-01", "w": 3, "c": 2, "b": ["沿着季风的方向（《失落的卫星》作者刘子超代表作）"]}, {"d": "2026-01-02", "w": 4, "c": 0, "b": []}, {"d": "2026-01-03", "w": 5, "c": 2, "b": ["沿着季风的方向（《失落的卫星》作者刘子超代表作）"]}, {"d": "2026-01-04", "w": 6, "c": 0, "b": []}, {"d": "2026-01-05", "w": 0, "c": 0, "b": []}, {"d": "2026-01-06", "w": 1, "c": 0, "b": []}, {"d": "2026-01-07", "w": 2, "c": 0, "b": []}, {"d": "2026-01-08", "w": 3, "c": 0, "b": []}, {"d": "2026-01-09", "w": 4, "c": 0, "b": []}, {"d": "2026-01-10", "w": 5, "c": 0, "b": []}, {"d": "2026-01-11", "w": 6, "c": 0, "b": []}, {"d": "2026-01-12", "w": 0, "c": 0, "b": []}, {"d": "2026-01-13", "w": 1, "c": 0, "b": []}, {"d": "2026-01-14", "w": 2, "c": 0, "b": []}, {"d": "2026-01-15", "w": 3, "c": 0, "b": []}, {"d": "2026-01-16", "w": 4, "c": 0, "b": []}, {"d": "2026-01-17", "w": 5, "c": 0, "b": []}, {"d": "2026-01-18", "w": 6, "c": 0, "b": []}, {"d": "2026-01-19", "w": 0, "c": 0, "b": []}, {"d": "2026-01-20", "w": 1, "c": 0, "b": []}, {"d": "2026-01-21", "w": 2, "c": 0, "b": []}, {"d": "2026-01-22", "w": 3, "c": 2, "b": ["沿着季风的方向（《失落的卫星》作者刘子超代表作）"]}, {"d": "2026-01-23", "w": 4, "c": 0, "b": []}, {"d": "2026-01-24", "w": 5, "c": 3, "b": ["沿着季风的方向（《失落的卫星》作者刘子超代表作）"]}, {"d": "2026-01-25", "w": 6, "c": 3, "b": ["沿着季风的方向（《失落的卫星》作者刘子超代表作）"]}, {"d": "2026-01-26", "w": 0, "c": 3, "b": ["对工作说不", "精神健康讲记_9787515218885"]}, {"d": "2026-01-27", "w": 1, "c": 0, "b": []}, {"d": "2026-01-28", "w": 2, "c": 0, "b": []}, {"d": "2026-01-29", "w": 3, "c": 0, "b": []}, {"d": "2026-01-30", "w": 4, "c": 4, "b": ["一个阿富汗女人的来信（轻纪实）"]}, {"d": "2026-01-31", "w": 5, "c": 0, "b": []}, {"d": "2026-02-01", "w": 6, "c": 0, "b": []}, {"d": "2026-02-02", "w": 0, "c": 6, "b": ["精神健康讲记_9787515218885"]}, {"d": "2026-02-03", "w": 1, "c": 1, "b": ["精神健康讲记_9787515218885"]}, {"d": "2026-02-04", "w": 2, "c": 10, "b": ["真原医：21世纪完整的预防医学"]}, {"d": "2026-02-05", "w": 3, "c": 4, "b": ["真原医：21世纪完整的预防医学"]}, {"d": "2026-02-06", "w": 4, "c": 11, "b": ["真原医：21世纪完整的预防医学"]}, {"d": "2026-02-07", "w": 5, "c": 8, "b": ["真原医：21世纪完整的预防医学"]}, {"d": "2026-02-08", "w": 6, "c": 7, "b": ["真原医：21世纪完整的预防医学", "老实人（伏尔泰作品集）"]}, {"d": "2026-02-09", "w": 0, "c": 0, "b": []}, {"d": "2026-02-10", "w": 1, "c": 0, "b": []}, {"d": "2026-02-11", "w": 2, "c": 29, "b": ["真原医：21世纪完整的预防医学"]}, {"d": "2026-02-12", "w": 3, "c": 0, "b": []}, {"d": "2026-02-13", "w": 4, "c": 3, "b": ["真原医：21世纪完整的预防医学"]}, {"d": "2026-02-14", "w": 5, "c": 0, "b": []}, {"d": "2026-02-15", "w": 6, "c": 2, "b": ["真原医：21世纪完整的预防医学"]}, {"d": "2026-02-16", "w": 0, "c": 2, "b": ["真原医：21世纪完整的预防医学"]}, {"d": "2026-02-17", "w": 1, "c": 0, "b": []}, {"d": "2026-02-18", "w": 2, "c": 0, "b": []}, {"d": "2026-02-19", "w": 3, "c": 0, "b": []}, {"d": "2026-02-20", "w": 4, "c": 0, "b": []}, {"d": "2026-02-21", "w": 5, "c": 0, "b": []}, {"d": "2026-02-22", "w": 6, "c": 3, "b": ["真原医：21世纪完整的预防医学"]}, {"d": "2026-02-23", "w": 0, "c": 0, "b": []}, {"d": "2026-02-24", "w": 1, "c": 0, "b": []}, {"d": "2026-02-25", "w": 2, "c": 0, "b": []}, {"d": "2026-02-26", "w": 3, "c": 5, "b": ["真原医：21世纪完整的预防医学"]}, {"d": "2026-02-27", "w": 4, "c": 0, "b": []}, {"d": "2026-02-28", "w": 5, "c": 0, "b": []}, {"d": "2026-03-01", "w": 6, "c": 0, "b": []}, {"d": "2026-03-02", "w": 0, "c": 3, "b": ["1844年经济学哲学手稿"]}, {"d": "2026-03-03", "w": 1, "c": 0, "b": []}, {"d": "2026-03-04", "w": 2, "c": 0, "b": []}, {"d": "2026-03-05", "w": 3, "c": 0, "b": []}, {"d": "2026-03-06", "w": 4, "c": 0, "b": []}, {"d": "2026-03-07", "w": 5, "c": 1, "b": ["万水千山走遍"]}, {"d": "2026-03-08", "w": 6, "c": 0, "b": []}, {"d": "2026-03-09", "w": 0, "c": 0, "b": []}, {"d": "2026-03-10", "w": 1, "c": 0, "b": []}, {"d": "2026-03-11", "w": 2, "c": 1, "b": ["当世界停止消费"]}, {"d": "2026-03-12", "w": 3, "c": 3, "b": ["动物农场"]}, {"d": "2026-03-13", "w": 4, "c": 2, "b": ["动物农场"]}, {"d": "2026-03-14", "w": 5, "c": 0, "b": []}, {"d": "2026-03-15", "w": 6, "c": 5, "b": ["1984"]}, {"d": "2026-03-16", "w": 0, "c": 0, "b": []}, {"d": "2026-03-17", "w": 1, "c": 10, "b": ["1984"]}, {"d": "2026-03-18", "w": 2, "c": 3, "b": ["1984"]}, {"d": "2026-03-19", "w": 3, "c": 1, "b": ["1984"]}, {"d": "2026-03-20", "w": 4, "c": 2, "b": ["1984"]}, {"d": "2026-03-21", "w": 5, "c": 0, "b": []}, {"d": "2026-03-22", "w": 6, "c": 0, "b": []}, {"d": "2026-03-23", "w": 0, "c": 0, "b": []}, {"d": "2026-03-24", "w": 1, "c": 0, "b": []}, {"d": "2026-03-25", "w": 2, "c": 0, "b": []}, {"d": "2026-03-26", "w": 3, "c": 0, "b": []}, {"d": "2026-03-27", "w": 4, "c": 0, "b": []}, {"d": "2026-03-28", "w": 5, "c": 0, "b": []}, {"d": "2026-03-29", "w": 6, "c": 0, "b": []}, {"d": "2026-03-30", "w": 0, "c": 0, "b": []}, {"d": "2026-03-31", "w": 1, "c": 1, "b": ["1984"]}, {"d": "2026-04-01", "w": 2, "c": 10, "b": ["1984"]}, {"d": "2026-04-02", "w": 3, "c": 0, "b": []}, {"d": "2026-04-03", "w": 4, "c": 0, "b": []}, {"d": "2026-04-04", "w": 5, "c": 0, "b": []}, {"d": "2026-04-05", "w": 6, "c": 0, "b": []}, {"d": "2026-04-06", "w": 0, "c": 0, "b": []}, {"d": "2026-04-07", "w": 1, "c": 0, "b": []}, {"d": "2026-04-08", "w": 2, "c": 0, "b": []}, {"d": "2026-04-09", "w": 3, "c": 0, "b": []}, {"d": "2026-04-10", "w": 4, "c": 0, "b": []}, {"d": "2026-04-11", "w": 5, "c": 0, "b": []}, {"d": "2026-04-12", "w": 6, "c": 0, "b": []}, {"d": "2026-04-13", "w": 0, "c": 0, "b": []}, {"d": "2026-04-14", "w": 1, "c": 0, "b": []}, {"d": "2026-04-15", "w": 2, "c": 1, "b": ["美丽新世界"]}, {"d": "2026-04-16", "w": 3, "c": 2, "b": ["美丽新世界"]}, {"d": "2026-04-17", "w": 4, "c": 1, "b": ["美丽新世界"]}, {"d": "2026-04-18", "w": 5, "c": 0, "b": []}, {"d": "2026-04-19", "w": 6, "c": 0, "b": []}, {"d": "2026-04-20", "w": 0, "c": 0, "b": []}, {"d": "2026-04-21", "w": 1, "c": 0, "b": []}, {"d": "2026-04-22", "w": 2, "c": 0, "b": []}, {"d": "2026-04-23", "w": 3, "c": 1, "b": ["美丽新世界"]}, {"d": "2026-04-24", "w": 4, "c": 1, "b": ["美丽新世界"]}, {"d": "2026-04-25", "w": 5, "c": 0, "b": []}, {"d": "2026-04-26", "w": 6, "c": 3, "b": ["美丽新世界"]}, {"d": "2026-04-27", "w": 0, "c": 0, "b": []}, {"d": "2026-04-28", "w": 1, "c": 0, "b": []}, {"d": "2026-04-29", "w": 2, "c": 1, "b": ["美丽新世界"]}, {"d": "2026-04-30", "w": 3, "c": 12, "b": ["美丽新世界"]}, {"d": "2026-05-01", "w": 4, "c": 18, "b": ["可能性的艺术：比较政治学30讲", "美丽新世界"]}, {"d": "2026-05-02", "w": 5, "c": 2, "b": ["她对此感到厌烦3"]}, {"d": "2026-05-03", "w": 6, "c": 0, "b": []}, {"d": "2026-05-04", "w": 0, "c": 0, "b": []}, {"d": "2026-05-05", "w": 1, "c": 2, "b": ["她对此感到厌烦3"]}, {"d": "2026-05-06", "w": 2, "c": 4, "b": ["她对此感到厌烦3"]}, {"d": "2026-05-07", "w": 3, "c": 6, "b": ["她对此感到厌烦3"]}, {"d": "2026-05-08", "w": 4, "c": 0, "b": []}, {"d": "2026-05-09", "w": 5, "c": 1, "b": ["她对此感到厌烦3"]}, {"d": "2026-05-10", "w": 6, "c": 8, "b": ["她对此感到厌烦3"]}, {"d": "2026-05-11", "w": 0, "c": 2, "b": ["即使以最微弱的光"]}, {"d": "2026-05-12", "w": 1, "c": 0, "b": []}, {"d": "2026-05-13", "w": 2, "c": 11, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-05-14", "w": 3, "c": 0, "b": []}, {"d": "2026-05-15", "w": 4, "c": 3, "b": ["她对此感到厌烦3"]}, {"d": "2026-05-16", "w": 5, "c": 0, "b": []}, {"d": "2026-05-17", "w": 6, "c": 5, "b": ["写出我心：普通人如何通过写作表达自己"]}, {"d": "2026-05-18", "w": 0, "c": 0, "b": []}, {"d": "2026-05-19", "w": 1, "c": 0, "b": []}, {"d": "2026-05-20", "w": 2, "c": 2, "b": ["写出我心：普通人如何通过写作表达自己"]}, {"d": "2026-05-21", "w": 3, "c": 4, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-05-22", "w": 4, "c": 0, "b": []}, {"d": "2026-05-23", "w": 5, "c": 2, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-05-24", "w": 6, "c": 11, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-05-25", "w": 0, "c": 3, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-05-26", "w": 1, "c": 0, "b": []}, {"d": "2026-05-27", "w": 2, "c": 0, "b": []}, {"d": "2026-05-28", "w": 3, "c": 4, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-05-29", "w": 4, "c": 1, "b": ["写出我心：普通人如何通过写作表达自己"]}, {"d": "2026-05-30", "w": 5, "c": 2, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-05-31", "w": 6, "c": 4, "b": ["可能性的艺术：比较政治学30讲", "写出我心：普通人如何通过写作表达自己"]}, {"d": "2026-06-01", "w": 0, "c": 0, "b": []}, {"d": "2026-06-02", "w": 1, "c": 0, "b": []}, {"d": "2026-06-03", "w": 2, "c": 3, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-06-04", "w": 3, "c": 0, "b": []}, {"d": "2026-06-05", "w": 4, "c": 0, "b": []}, {"d": "2026-06-06", "w": 5, "c": 0, "b": []}, {"d": "2026-06-07", "w": 6, "c": 4, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-06-08", "w": 0, "c": 5, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-06-09", "w": 1, "c": 0, "b": []}, {"d": "2026-06-10", "w": 2, "c": 5, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-06-11", "w": 3, "c": 3, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-06-12", "w": 4, "c": 0, "b": []}, {"d": "2026-06-13", "w": 5, "c": 0, "b": []}, {"d": "2026-06-14", "w": 6, "c": 18, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-06-15", "w": 0, "c": 14, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-06-16", "w": 1, "c": 0, "b": []}, {"d": "2026-06-17", "w": 2, "c": 0, "b": []}, {"d": "2026-06-18", "w": 3, "c": 12, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-06-19", "w": 4, "c": 10, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-06-20", "w": 5, "c": 1, "b": ["可能性的艺术：比较政治学30讲"]}, {"d": "2026-06-21", "w": 6, "c": 9, "b": ["老实人（伏尔泰作品集）"]}, {"d": "2026-06-22", "w": 0, "c": 1, "b": ["一切愁云消散"]}, {"d": "2026-06-23", "w": 1, "c": 0, "b": []}, {"d": "2026-06-24", "w": 2, "c": 0, "b": []}, {"d": "2026-06-25", "w": 3, "c": 0, "b": []}, {"d": "2026-06-26", "w": 4, "c": 0, "b": []}, {"d": "2026-06-27", "w": 5, "c": 2, "b": ["一切愁云消散", "老实人（伏尔泰作品集）"]}, {"d": "2026-06-28", "w": 6, "c": 2, "b": ["一切愁云消散"]}, {"d": "2026-06-29", "w": 0, "c": 2, "b": ["一切愁云消散"]}, {"d": "2026-06-30", "w": 1, "c": 0, "b": []}, {"d": "2026-07-01", "w": 2, "c": 3, "b": ["一切愁云消散"]}, {"d": "2026-07-02", "w": 3, "c": 9, "b": ["喜剧：灵感、技巧、突破瓶颈的创作原理"]}, {"d": "2026-07-03", "w": 4, "c": 0, "b": []}, {"d": "2026-07-04", "w": 5, "c": 0, "b": []}, {"d": "2026-07-05", "w": 6, "c": 0, "b": []}, {"d": "2026-07-06", "w": 0, "c": 2, "b": ["一切愁云消散"]}, {"d": "2026-07-07", "w": 1, "c": 0, "b": []}, {"d": "2026-07-08", "w": 2, "c": 0, "b": []}, {"d": "2026-07-09", "w": 3, "c": 0, "b": []}, {"d": "2026-07-10", "w": 4, "c": 2, "b": ["埃莱娜·费兰特作品系列：被遗弃的日子"]}, {"d": "2026-07-11", "w": 5, "c": 0, "b": []}, {"d": "2026-07-12", "w": 6, "c": 2, "b": ["埃莱娜·费兰特作品系列：被遗弃的日子"]}, {"d": "2026-07-13", "w": 0, "c": 8, "b": ["埃莱娜·费兰特作品系列：被遗弃的日子"]}, {"d": "2026-07-14", "w": 1, "c": 1, "b": ["埃莱娜·费兰特作品系列：被遗弃的日子"]}, {"d": "2026-07-15", "w": 2, "c": 0, "b": []}, {"d": "2026-07-16", "w": 3, "c": 0, "b": []}, {"d": "2026-07-17", "w": 4, "c": 2, "b": ["埃莱娜·费兰特作品系列：被遗弃的日子"]}, {"d": "2026-07-18", "w": 5, "c": 2, "b": ["埃莱娜·费兰特作品系列：被遗弃的日子"]}, {"d": "2026-07-19", "w": 6, "c": 0, "b": []}, {"d": "2026-07-20", "w": 0, "c": 3, "b": ["埃莱娜·费兰特作品系列：被遗弃的日子"]}, {"d": "2026-07-21", "w": 1, "c": 1, "b": ["埃莱娜·费兰特作品系列：被遗弃的日子"]}, {"d": "2026-07-22", "w": 2, "c": 0, "b": []}, {"d": "2026-07-23", "w": 3, "c": 0, "b": []}, {"d": "2026-07-24", "w": 4, "c": 0, "b": []}, {"d": "2026-07-25", "w": 5, "c": 0, "b": []}, {"d": "2026-07-26", "w": 6, "c": 0, "b": []}, {"d": "2026-07-27", "w": 0, "c": 0, "b": []}, {"d": "2026-07-28", "w": 1, "c": 0, "b": []}, {"d": "2026-07-29", "w": 2, "c": 0, "b": []}, {"d": "2026-07-30", "w": 3, "c": 0, "b": []}, {"d": "2026-07-31", "w": 4, "c": 1, "b": ["生育制度"]}, {"d": "2026-08-01", "w": 5, "c": 0, "b": []}, {"d": "2026-08-02", "w": 6, "c": 0, "b": []}, {"d": "2026-08-03", "w": 0, "c": 1, "b": ["一切愁云消散"]}, {"d": "2026-08-04", "w": 1, "c": 1, "b": ["一切愁云消散"]}, {"d": "2026-08-05", "w": 2, "c": 0, "b": []}, {"d": "2026-08-06", "w": 3, "c": 0, "b": []}, {"d": "2026-08-07", "w": 4, "c": 0, "b": []}, {"d": "2026-08-08", "w": 5, "c": 0, "b": []}, {"d": "2026-08-09", "w": 6, "c": 1, "b": ["生育制度"]}, {"d": "2026-08-10", "w": 0, "c": 0, "b": []}, {"d": "2026-08-11", "w": 1, "c": 0, "b": []}, {"d": "2026-08-12", "w": 2, "c": 3, "b": ["明亮的夜晚"]}, {"d": "2026-08-13", "w": 3, "c": 7, "b": ["明亮的夜晚"]}, {"d": "2026-08-14", "w": 4, "c": 1, "b": ["明亮的夜晚"]}, {"d": "2026-08-15", "w": 5, "c": 0, "b": []}, {"d": "2026-08-16", "w": 6, "c": 0, "b": []}, {"d": "2026-08-17", "w": 0, "c": 0, "b": []}, {"d": "2026-08-18", "w": 1, "c": 1, "b": ["明亮的夜晚"]}, {"d": "2026-08-19", "w": 2, "c": 0, "b": []}, {"d": "2026-08-20", "w": 3, "c": 0, "b": []}, {"d": "2026-08-21", "w": 4, "c": 0, "b": []}, {"d": "2026-08-22", "w": 5, "c": 0, "b": []}, {"d": "2026-08-23", "w": 6, "c": 0, "b": []}, {"d": "2026-08-24", "w": 0, "c": 4, "b": ["明亮的夜晚"]}, {"d": "2026-08-25", "w": 1, "c": 0, "b": []}, {"d": "2026-08-26", "w": 2, "c": 0, "b": []}, {"d": "2026-08-27", "w": 3, "c": 0, "b": []}, {"d": "2026-08-28", "w": 4, "c": 0, "b": []}, {"d": "2026-08-29", "w": 5, "c": 5, "b": ["明亮的夜晚"]}, {"d": "2026-08-30", "w": 6, "c": 0, "b": []}, {"d": "2026-08-31", "w": 0, "c": 7, "b": ["明亮的夜晚"]}, {"d": "2026-09-01", "w": 1, "c": 2, "b": ["明亮的夜晚"]}, {"d": "2026-09-02", "w": 2, "c": 8, "b": ["明亮的夜晚"]}, {"d": "2026-09-03", "w": 3, "c": 10, "b": ["明亮的夜晚"]}, {"d": "2026-09-04", "w": 4, "c": 0, "b": []}, {"d": "2026-09-05", "w": 5, "c": 4, "b": ["时间贫困"]}, {"d": "2026-09-06", "w": 6, "c": 0, "b": []}, {"d": "2026-09-07", "w": 0, "c": 7, "b": ["时间贫困"]}, {"d": "2026-09-08", "w": 1, "c": 0, "b": []}, {"d": "2026-09-09", "w": 2, "c": 0, "b": []}, {"d": "2026-09-10", "w": 3, "c": 0, "b": []}, {"d": "2026-09-11", "w": 4, "c": 0, "b": []}, {"d": "2026-09-12", "w": 5, "c": 2, "b": ["李诞工作手册（万字全新增订）"]}, {"d": "2026-09-13", "w": 6, "c": 0, "b": []}, {"d": "2026-09-14", "w": 0, "c": 0, "b": []}, {"d": "2026-09-15", "w": 1, "c": 1, "b": ["夜晚的潜水艇"]}, {"d": "2026-09-16", "w": 2, "c": 0, "b": []}, {"d": "2026-09-17", "w": 3, "c": 0, "b": []}, {"d": "2026-09-18", "w": 4, "c": 0, "b": []}, {"d": "2026-09-19", "w": 5, "c": 0, "b": []}, {"d": "2026-09-20", "w": 6, "c": 0, "b": []}, {"d": "2026-09-21", "w": 0, "c": 0, "b": []}, {"d": "2026-09-22", "w": 1, "c": 0, "b": []}, {"d": "2026-09-23", "w": 2, "c": 0, "b": []}, {"d": "2026-09-24", "w": 3, "c": 5, "b": ["夜晚的潜水艇", "无暇他顾"]}, {"d": "2026-09-25", "w": 4, "c": 0, "b": []}, {"d": "2026-09-26", "w": 5, "c": 0, "b": []}, {"d": "2026-09-27", "w": 6, "c": 1, "b": ["恨海情天文学短篇集：我爱你，你死吧"]}, {"d": "2026-09-28", "w": 0, "c": 0, "b": []}, {"d": "2026-09-29", "w": 1, "c": 0, "b": []}, {"d": "2026-09-30", "w": 2, "c": 0, "b": []}, {"d": "2026-10-01", "w": 3, "c": 0, "b": []}, {"d": "2026-10-02", "w": 4, "c": 3, "b": ["夜晚的潜水艇"]}, {"d": "2026-10-03", "w": 5, "c": 0, "b": []}, {"d": "2026-10-04", "w": 6, "c": 0, "b": []}, {"d": "2026-10-05", "w": 0, "c": 0, "b": []}, {"d": "2026-10-06", "w": 1, "c": 4, "b": ["夜晚的潜水艇"]}, {"d": "2026-10-07", "w": 2, "c": 0, "b": []}, {"d": "2026-10-08", "w": 3, "c": 5, "b": ["夜晚的潜水艇"]}, {"d": "2026-10-09", "w": 4, "c": 0, "b": []}, {"d": "2026-10-10", "w": 5, "c": 0, "b": []}, {"d": "2026-10-11", "w": 6, "c": 2, "b": ["夜晚的潜水艇"]}, {"d": "2026-10-12", "w": 0, "c": 12, "b": ["夜晚的潜水艇"]}, {"d": "2026-10-13", "w": 1, "c": 0, "b": []}, {"d": "2026-10-14", "w": 2, "c": 0, "b": []}, {"d": "2026-10-15", "w": 3, "c": 0, "b": []}, {"d": "2026-10-16", "w": 4, "c": 0, "b": []}, {"d": "2026-10-17", "w": 5, "c": 0, "b": []}, {"d": "2026-10-18", "w": 6, "c": 2, "b": ["恨海情天文学短篇集：我爱你，你死吧"]}, {"d": "2026-10-19", "w": 0, "c": 2, "b": ["恨海情天文学短篇集：我爱你，你死吧"]}, {"d": "2026-10-20", "w": 1, "c": 0, "b": []}, {"d": "2026-10-21", "w": 2, "c": 0, "b": []}, {"d": "2026-10-22", "w": 3, "c": 0, "b": []}, {"d": "2026-10-23", "w": 4, "c": 0, "b": []}, {"d": "2026-10-24", "w": 5, "c": 0, "b": []}, {"d": "2026-10-25", "w": 6, "c": 0, "b": []}, {"d": "2026-10-26", "w": 0, "c": 0, "b": []}, {"d": "2026-10-27", "w": 1, "c": 0, "b": []}, {"d": "2026-10-28", "w": 2, "c": 1, "b": ["有限与无限的游戏：一个哲学家眼中的竞技世界"]}, {"d": "2026-10-29", "w": 3, "c": 1, "b": ["有限与无限的游戏：一个哲学家眼中的竞技世界"]}, {"d": "2026-10-30", "w": 4, "c": 3, "b": ["赞美闲散（果麦经典）"]}, {"d": "2026-10-31", "w": 5, "c": 0, "b": []}, {"d": "2026-11-01", "w": 6, "c": 0, "b": []}, {"d": "2026-11-02", "w": 0, "c": 0, "b": []}, {"d": "2026-11-03", "w": 1, "c": 0, "b": []}, {"d": "2026-11-04", "w": 2, "c": 0, "b": []}, {"d": "2026-11-05", "w": 3, "c": 0, "b": []}, {"d": "2026-11-06", "w": 4, "c": 1, "b": ["百年孤独"]}, {"d": "2026-11-07", "w": 5, "c": 0, "b": []}, {"d": "2026-11-08", "w": 6, "c": 0, "b": []}, {"d": "2026-11-09", "w": 0, "c": 2, "b": ["百年孤独"]}, {"d": "2026-11-10", "w": 1, "c": 2, "b": ["百年孤独"]}, {"d": "2026-11-11", "w": 2, "c": 1, "b": ["百年孤独"]}, {"d": "2026-11-12", "w": 3, "c": 0, "b": []}, {"d": "2026-11-13", "w": 4, "c": 0, "b": []}, {"d": "2026-11-14", "w": 5, "c": 0, "b": []}, {"d": "2026-11-15", "w": 6, "c": 0, "b": []}, {"d": "2026-11-16", "w": 0, "c": 0, "b": []}, {"d": "2026-11-17", "w": 1, "c": 0, "b": []}, {"d": "2026-11-18", "w": 2, "c": 0, "b": []}], "topBooks2026": [{"title": "可能性的艺术：比较政治学30讲", "author": "刘瑜", "hl": 127, "rv": 4}, {"title": "真原医：21世纪完整的预防医学", "author": "杨定一", "hl": 81, "rv": 0}, {"title": "明亮的夜晚", "author": "崔恩荣", "hl": 45, "rv": 3}, {"title": "夜晚的潜水艇", "author": "陈春成", "hl": 30, "rv": 1}, {"title": "1984", "author": "[英]乔治·奥威尔", "hl": 32, "rv": 0}, {"title": "她对此感到厌烦3", "author": "妚鹤", "hl": 25, "rv": 1}, {"title": "美丽新世界", "author": "阿道司·赫胥黎", "hl": 23, "rv": 1}, {"title": "埃莱娜·费兰特作品系列：被遗弃的日子", "author": "埃莱娜·费兰特", "hl": 21, "rv": 0}, {"title": "老实人（伏尔泰作品集）", "author": "[法]伏尔泰", "hl": 12, "rv": 1}, {"title": "一切愁云消散", "author": "[英]薇塔·萨克维尔- 韦斯特", "hl": 13, "rv": 0}, {"title": "沿着季风的方向（《失落的卫星》作者刘子超代表作）", "author": "刘子超", "hl": 12, "rv": 0}, {"title": "时间贫困", "author": "[英]凯茜·霍姆斯", "hl": 11, "rv": 0}], "thoughts2026": [{"dt": "2026-04-30 15:05", "book": "美丽新世界", "author": "阿道司·赫胥黎", "abstract": "艰辛？他们可不觉得艰辛。相反，他们喜欢这种工作。这种工作很轻松，简单至极。身体和灵魂都不会紧张。每天毫不费劲地工作七个半小时，然后有定量的嗦麻配给，有游戏可玩，还有无限制的性爱和感官电影。他们夫复何求？​”他补充道，​“诚然，他们或许会要求缩短工作时间。当然，我们可以缩短他们的工作时间。从技术上讲，把所有低等种姓的工作时间缩减到每天三四个小时，这是非常简单的事。可他们会因此而变得更幸福吗？不会，他们不会的。", "content": "大多数人自愿拥抱的温柔乡"}, {"dt": "2026-05-01 09:48", "book": "可能性的艺术：比较政治学30讲", "author": "刘瑜", "abstract": "“可能性的艺术”这个说法，来自俾斯麦的一句话：“政治是可能性的艺术。”我很喜欢这句话，因为它通过“艺术”这个词表达了政治的力量，又通过“可能性”这个词表达了政治的限度，所以我把它用在了课程的标题里。", "content": "可能性是政治的边界（不能超越现实为所欲为），艺术是政治的智慧（可以主动创造）。"}, {"dt": "2026-05-01 10:12", "book": "可能性的艺术：比较政治学30讲", "author": "刘瑜", "abstract": "世界是复杂的，但又不是随机的，知识也应当如此。求知的道路，意味着永恒的疲倦以及偶尔的惊喜。", "content": "喜欢这篇序言"}, {"dt": "2026-05-15 19:34", "book": "她对此感到厌烦3", "author": "妚鹤", "abstract": "在漫长的人生中，海拉从未信过神，但这一刻，海拉忽然希望人的灵魂真的可以化作神明，这样她就可以保佑这个哭泣的女孩，使她生活在幸福中，一切顺利，开心快乐。", "content": "呜呜呜呜呜海拉🥹"}, {"dt": "2026-05-24 21:41", "book": "可能性的艺术：比较政治学30讲", "author": "刘瑜", "abstract": "在任何国家，面对民众，恶都是很难被推销的。打压异己、剥夺自由是一种恶，直接推销它很难奏效，但是，当恶与善捆绑出现，人们却有可能为它慷慨解囊。", "content": "剥夺自由是一种恶，但因为它被包装成某种“更高的善”的必要代价，推销的阻力就降低了。实际上我们可能两者都失去了。"}, {"dt": "2026-05-24 22:00", "book": "可能性的艺术：比较政治学30讲", "author": "刘瑜", "abstract": "遗憾的是，人类政治文明的变迁没有捷径，它必须穿过千千万万人的心灵。", "content": "每一次真正的进步，都依赖于千千万万个体在内心深处完成一场观念革命，这是一个漫长、艰难却又无可替代的过程。\n这句写得真好，既有理性的冷酷，又有人文的温度。"}, {"dt": "2026-06-27 11:32", "book": "老实人（伏尔泰作品集）", "author": "[法]伏尔泰", "abstract": "", "content": "情节好荒诞，但我喜欢这个结尾。\n世界既不完美，也未必有宏大意义。不必感到虚无、也别空谈哲学，而是 —— 劳作、创造，耕种自己的花园。"}, {"dt": "2026-08-12 23:15", "book": "明亮的夜晚", "author": "崔恩荣", "abstract": "“好久不见。”", "content": "原来是祖母啊，好久不见！👵🥰"}, {"dt": "2026-08-13 21:12", "book": "明亮的夜晚", "author": "崔恩荣", "abstract": "她应该从妈妈那里听说过我已经结婚，但她没有问起任何有关前夫的事。祖母只是问我在大学学了什么、在单位做什么、不工作的时间做些什么。", "content": "和家人朋友聊天，关心对方如何生活、对什么感兴趣，关心“她”本身，不问她是否完成了某个社会时钟下的任务。"}, {"dt": "2026-09-03 22:56", "book": "明亮的夜晚", "author": "崔恩荣", "abstract": "祖母微笑地点了点头，似乎知道我想说什么。", "content": "就这么结束了～意犹未尽🥹"}, {"dt": "2026-10-08 22:59", "book": "夜晚的潜水艇", "author": "陈春成", "abstract": "我恍恍惚惚，又想起我的钥匙来。我想到日光此时正映照溪面，将一些波光水影投在那碑上，光的涟漪在字迹上回荡，在青苔上回荡，青苔在一点一点滋长，里边藏着我的钥匙，钥匙里藏着老屋和故乡，那里一切安然不动。就这么想着，我一路走下山去，不知何时会回来。", "content": "喜欢这个故事，读得我好幸福🎋"}, {"dt": "2026-11-09 13:35", "book": "百年孤独", "author": "[哥]加西亚•马尔克斯", "abstract": "多年以后，面对行刑队，奥雷里亚诺·布恩迪亚上校将会回想起父亲带他去见识冰块的那个遥远的下午。", "content": "经典开场～终于开始读了！"}], "keywords2026": [{"word": "自己", "count": 90}, {"word": "政治", "count": 56}, {"word": "时间", "count": 52}, {"word": "身体", "count": 48}, {"word": "生活", "count": 46}, {"word": "国家", "count": 35}, {"word": "世界", "count": 34}, {"word": "社会", "count": 34}, {"word": "自由", "count": 29}, {"word": "工作", "count": 28}, {"word": "爱", "count": 28}, {"word": "幸福", "count": 26}, {"word": "健康", "count": 24}, {"word": "人类", "count": 23}, {"word": "自然", "count": 20}, {"word": "权力", "count": 17}, {"word": "思考", "count": 17}, {"word": "文化", "count": 16}, {"word": "存在", "count": 16}, {"word": "历史", "count": 14}, {"word": "选择", "count": 13}, {"word": "生命", "count": 12}, {"word": "痛苦", "count": 11}, {"word": "制度", "count": 11}, {"word": "文明", "count": 9}, {"word": "孤独", "count": 5}, {"word": "真实", "count": 5}, {"word": "勇气", "count": 4}]};
+
+    // 1. Render Monthly Bars & Interactive Inspector
+    let activeMonth = 5;
+    function renderMonths() {
+      const barsEl = document.getElementById('monthBars');
+      const lblsEl = document.getElementById('monthLabels');
+      const maxHl = Math.max(...D.monthly2026.map(m => m.hl), 1);
+
+      barsEl.innerHTML = D.monthly2026.map(m => {
+        const hPct = Math.max(6, (m.hl / maxHl) * 86);
+        const isPeak = m.hl >= 85;
+        return `
+          <div class="m-col ${isPeak ? 'peak' : ''} ${m.month === activeMonth ? 'active' : ''}" data-m="${m.month}" tabindex="0" role="button" aria-label="2026年${m.month}月 ${m.hl}条划线">
+            <div class="m-val">${m.hl}</div>
+            <div class="m-bar" style="height: ${hPct}%">
+              ${m.rv > 0 ? `<span class="m-thought-dot" title="${m.rv}条想法">💭</span>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lblsEl.innerHTML = D.monthly2026.map(m => `<div>${m.month}月</div>`).join('');
+
+      const item = D.monthly2026.find(m => m.month === activeMonth);
+      const topStr = item.top.length
+        ? item.top.map(t => `《${t.title.replace(/（.*?）/g, '')}》(${t.cnt}划)`).join(' · ')
+        : '本月以沉浸阅读为主';
+      document.getElementById('monthStory').innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <strong style="color:var(--terra);">2026 年 ${item.month} 月阅读档案</strong>
+          <span style="font-size:12.5px;color:var(--ink-muted);">${item.hl} 条划线 · ${item.rv} 条想法</span>
+        </div>
+        <div style="font-size:14px;color:var(--ink-primary);margin-bottom:6px;">${item.note}</div>
+        <div style="font-size:12.5px;color:var(--ink-secondary);"><strong>当月主力：</strong>${topStr}</div>
+      `;
+
+      barsEl.querySelectorAll('.m-col').forEach(col => {
+        const pick = () => {
+          activeMonth = Number(col.dataset.m);
+          renderMonths();
+        };
+        col.addEventListener('click', pick);
+        col.addEventListener('mouseenter', pick);
+      });
+    }
+
+    // 2. Render Top 10 Books in 2026
+    function renderTop2026() {
+      const box = document.getElementById('top2026List');
+      const items = D.topBooks2026.slice(0, 10);
+      const max = items[0] ? items[0].hl : 1;
+      box.innerHTML = items.map(b => {
+        const cleanTitle = b.title.replace(/（.*?）/g, '').trim();
+        const pct = Math.max(6, (b.hl / max) * 100);
+        return `
+          <div class="wd-row" style="grid-template-columns: 150px 1fr 68px;">
+            <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;" title="${b.title}">${cleanTitle}</div>
+            <div class="wd-track"><div class="wd-fill" style="width:${pct.toFixed(1)}%"></div></div>
+            <div style="font-size:12px;color:var(--ink-secondary);text-align:right;font-variant-numeric:tabular-nums;">${b.hl}划${b.rv ? `·${b.rv}想` : ''}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 3. Render 24h Polar Rose Clock SVG
+    let clockMode = '2026';
+    function renderClock() {
+      const svg = document.getElementById('clockSvg');
+      const data = clockMode === '2026' ? D.hour2026 : D.hourHist;
+      const cx = 170;
+      const cy = 170;
+      const innerR = 36;
+      const maxOuterR = 132;
+      const maxVal = Math.max(...data, 1);
+
+      let markup = '';
+      // Reference rings
+      [0.33, 0.66, 1].forEach(f => {
+        const r = innerR + (maxOuterR - innerR) * f;
+        markup += `<circle cx="${cx}" cy="${cy}" r="${r.toFixed(1)}" fill="none" stroke="#e2dacb" stroke-width="1" stroke-dasharray="3,3" />`;
+      });
+
+      const step = (Math.PI * 2) / 24;
+      for (let h = 0; h < 24; h++) {
+        const a0 = -Math.PI / 2 + h * step + 0.015;
+        const a1 = -Math.PI / 2 + (h + 1) * step - 0.015;
+        const val = data[h];
+        const rOut = innerR + (val / maxVal) * (maxOuterR - innerR);
+        const isNight = h >= 21 || h <= 1;
+        const isNoon = h === 12 || h === 13;
+        const fill = isNight ? '#b55437' : (isNoon ? '#c78d24' : '#244c40');
+        const opacity = val === 0 ? 0.12 : (0.35 + 0.65 * (val / maxVal));
+
+        const x1 = cx + innerR * Math.cos(a0);
+        const y1 = cy + innerR * Math.sin(a0);
+        const x2 = cx + rOut * Math.cos(a0);
+        const y2 = cy + rOut * Math.sin(a0);
+        const x3 = cx + rOut * Math.cos(a1);
+        const y3 = cy + rOut * Math.sin(a1);
+        const x4 = cx + innerR * Math.cos(a1);
+        const y4 = cy + innerR * Math.sin(a1);
+
+        const d = `M ${x1.toFixed(1)} ${y1.toFixed(1)} L ${x2.toFixed(1)} ${y2.toFixed(1)} A ${rOut.toFixed(1)} ${rOut.toFixed(1)} 0 0 1 ${x3.toFixed(1)} ${y3.toFixed(1)} L ${x4.toFixed(1)} ${y4.toFixed(1)} A ${innerR} ${innerR} 0 0 0 ${x1.toFixed(1)} ${y1.toFixed(1)} Z`;
+        markup += `<path d="${d}" fill="${fill}" fill-opacity="${opacity.toFixed(2)}"><title>${h}:00–${h}:59 共 ${val} 条划线</title></path>`;
+
+        if (h % 3 === 0) {
+          const la = -Math.PI / 2 + (h + 0.5) * step;
+          const lr = maxOuterR + 18;
+          markup += `<text x="${(cx + lr * Math.cos(la)).toFixed(1)}" y="${(cy + lr * Math.sin(la) + 4).toFixed(1)}" text-anchor="middle" font-size="11.5" font-weight="600" fill="#59534a">${String(h).padStart(2, '0')}h</text>`;
+        }
+      }
+
+      markup += `<text x="${cx}" y="${cy - 2}" text-anchor="middle" font-family="serif" font-size="15" font-weight="700" fill="#1e1d1a">${clockMode === '2026' ? '2026' : '往年'}</text>`;
+      markup += `<text x="${cx}" y="${cy + 15}" text-anchor="middle" font-size="11" fill="#8a8377">24H</text>`;
+      svg.innerHTML = markup;
+
+      document.getElementById('clockCaption').innerHTML = clockMode === '2026'
+        ? '<strong>2026 特征：</strong>23 点（120 划）和 22 点（102 划）断层领先，21–24 点占全年 55%，深夜独处时间成为阅读主舞台。'
+        : '<strong>往年对比（2018–2025）：</strong>12–13 点午休高峰（1,126 划）几乎与 22–23 点夜读（795 划）分庭抗礼，节奏更加分散。';
+    }
+
+    // 4. Render Weekday Distribution
+    function renderWeekdays() {
+      const names = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+      const max = Math.max(...D.wd2026, 1);
+      document.getElementById('wdBars').innerHTML = D.wd2026.map((cnt, i) => `
+        <div class="wd-row ${i >= 5 ? 'weekend' : ''}">
+          <div style="font-weight:600;">${names[i]}</div>
+          <div class="wd-track"><div class="wd-fill" style="width:${Math.max(5, cnt / max * 100).toFixed(1)}%"></div></div>
+          <div style="text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-secondary);">${cnt} 划</div>
+        </div>
+      `).join('');
+    }
+
+    // 5. Render 2026 Heatmap
+    function renderHeatmap() {
+      const grid = document.getElementById('heatmapGrid');
+      const tip = document.getElementById('hmTooltip');
+      // Pad leading blank cells so Jan 1 aligns on its weekday row (0=Mon..6=Sun)
+      const firstW = D.calendar2026[0].w;
+      let html = '';
+      for (let i = 0; i < firstW; i++) {
+        html += `<div style="width:14px;height:14px;"></div>`;
+      }
+      html += D.calendar2026.map(day => {
+        let cls = 'hm-cell';
+        if (day.c >= 15) cls += ' hm-l4';
+        else if (day.c >= 7) cls += ' hm-l3';
+        else if (day.c >= 3) cls += ' hm-l2';
+        else if (day.c >= 1) cls += ' hm-l1';
+        const booksAttr = day.b.join('、');
+        return `<div class="${cls}" data-d="${day.d}" data-c="${day.c}" data-b="${booksAttr.replace(/"/g, '&quot;')}"></div>`;
+      }).join('');
+      grid.innerHTML = html;
+
+      grid.querySelectorAll('.hm-cell').forEach(cell => {
+        cell.addEventListener('mouseenter', () => {
+          const d = cell.dataset.d;
+          const c = Number(cell.dataset.c);
+          const b = cell.dataset.b;
+          tip.textContent = c === 0
+            ? `${d}：未留下划线记录`
+            : `${d}：共 ${c} 条笔记 · 阅读 ${b}`;
+        });
+      });
+    }
+
+    // 6. Render 8-Year Chronicle
+    function renderChronicle() {
+      const svg = document.getElementById('chronicleSvg');
+      const list = D.chronicle;
+      const w = 1000;
+      const h = 210;
+      const padL = 50;
+      const padR = 40;
+      const padT = 26;
+      const padB = 34;
+      const maxHl = Math.max(...list.map(x => x.hl), 1);
+      const stepX = (w - padL - padR) / (list.length - 1);
+
+      const pts = list.map((x, i) => [
+        padL + i * stepX,
+        h - padB - (x.hl / maxHl) * (h - padT - padB)
+      ]);
+
+      const linePath = pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ');
+      const areaPath = `${linePath} L ${pts[pts.length - 1][0].toFixed(1)} ${h - padB} L ${pts[0][0].toFixed(1)} ${h - padB} Z`;
+
+      let markup = `
+        <defs>
+          <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#244c40" stop-opacity="0.28"/>
+            <stop offset="100%" stop-color="#244c40" stop-opacity="0.02"/>
+          </linearGradient>
+        </defs>
+        <path d="${areaPath}" fill="url(#areaGrad)" />
+        <path d="${linePath}" fill="none" stroke="#244c40" stroke-width="3" stroke-linejoin="round" />
+      `;
+
+      pts.forEach((p, i) => {
+        const x = list[i];
+        const isCur = x.year === 2026;
+        markup += `
+          <circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${isCur ? 7 : 5}" fill="${isCur ? '#b55437' : '#244c40'}" stroke="#fcfaf6" stroke-width="2" />
+          <text x="${p[0].toFixed(1)}" y="${(p[1] - 12).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="700" fill="${isCur ? '#b55437' : '#1e1d1a'}">${x.hl}划</text>
+          <text x="${p[0].toFixed(1)}" y="${h - 10}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#59534a">${x.year}</text>
+        `;
+      });
+      svg.innerHTML = markup;
+
+      document.getElementById('chronicleGrid').innerHTML = list.map(y => `
+        <div class="yr-card ${y.year === 2026 ? 'current' : ''}">
+          <div class="yr-top">
+            <span class="yr-num">${y.year}</span>
+            <span class="yr-stat">${y.books} 本 · ${y.hl} 划 · ${y.rv} 想</span>
+          </div>
+          <div class="yr-theme">${y.theme}</div>
+          <div class="yr-books">代表作：${y.top.map(t => `《${t.title.replace(/（.*?）/g, '')}》`).join('、')}</div>
+        </div>
+      `).join('');
+    }
+
+    // 7. Render Word Cloud
+    function renderWordCloud() {
+      const box = document.getElementById('wordCloud');
+      const max = D.keywords2026[0] ? D.keywords2026[0].count : 1;
+      const palette = ['#244c40', '#b55437', '#8f6012', '#2f5e6e', '#52427a'];
+      box.innerHTML = D.keywords2026.map((k, idx) => {
+        const ratio = k.count / max;
+        const size = (13 + ratio * 20).toFixed(1);
+        const col = palette[idx % palette.length];
+        return `<span class="wc-word" style="font-size:${size}px;color:${col};" title="2026年划线中共出现 ${k.count} 次">${k.word}<sup style="font-size:10px;opacity:0.65;margin-left:2px;">${k.count}</sup></span>`;
+      }).join('');
+    }
+
+    // 8. Render 12 Thoughts
+    function renderThoughts() {
+      const box = document.getElementById('thoughtsGrid');
+      box.innerHTML = D.thoughts2026.map(t => `
+        <article class="thought-card">
+          <div class="th-head">
+            <span class="th-book">《${t.book.replace(/（.*?）/g, '')}》</span>
+            <span>${t.dt}</span>
+          </div>
+          ${t.abstract ? `<div class="th-quote">${t.abstract}</div>` : ''}
+          <div class="th-my">💭 ${t.content}</div>
+        </article>
+      `).join('');
+    }
+
+    // Clock switcher
+    document.querySelectorAll('[data-clock]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-clock]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        clockMode = btn.dataset.clock;
+        renderClock();
+      });
+    });
+
+    renderMonths();
+    renderTop2026();
+    renderClock();
+    renderWeekdays();
+    renderHeatmap();
+    renderChronicle();
+    renderWordCloud();
+    renderThoughts();
+  </script>
+</body>
+</html>
